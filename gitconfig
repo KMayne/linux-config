@@ -1,0 +1,5 @@
+[user]
+	name = Kian Mayne
+	email = git@kianmayne.co.uk
+[merge]
+	defaultToUpstream = true

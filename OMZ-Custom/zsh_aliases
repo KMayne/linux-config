@@ -1,0 +1,11 @@
+function permalias () {
+  alias "$*"
+  echo alias "$*" >> $ZSH_CUSTOM/zsh_aliases
+}
+
+alias virc='vi ~/.zshrc && source ~/.zshrc'
+
+# Git aliases
+alias ghr='git reset --hard'
+alias gundo='git reset HEAD~'
+alias grvt='git revert'

@@ -1,0 +1,7 @@
+IdentityFile ~/.ssh/id_rsa
+ServerAliveInterval 5
+
+Host km kianmayne.co.uk
+  Hostname kianmayne.co.uk
+  Port 2014
+  User kian
