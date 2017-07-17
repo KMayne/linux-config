@@ -3,3 +3,5 @@
 	email = git@kianmayne.co.uk
 [merge]
 	defaultToUpstream = true
+[push]
+	default = simple
