@@ -39,5 +39,3 @@ set shiftwidth=2
 set expandtab
 set hlsearch
 
-" Cancel search with <Esc>
-nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
