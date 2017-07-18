@@ -9,5 +9,8 @@ alias virc='vi ~/.zshrc && source ~/.zshrc'
 alias ghr='git reset --hard'
 alias gundo='git reset HEAD~'
 alias grvt='git revert'
+
+# Other
 alias pubkey='less ~/.ssh/id_rsa.pub'
 
+alias cdpp='cd ~/Repos/paperless'

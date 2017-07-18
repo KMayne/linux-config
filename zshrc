@@ -19,14 +19,8 @@ ZSH_THEME="agnoster"
 # Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=7
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -62,19 +56,19 @@ export LANG=en_GB.UTF-8
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
 # Completion
-zstyle ':completion:*' completer _expand _complete _ignored _match _correct _approximate _prefix
-zstyle ':completion:*' expand prefix suffix
-zstyle ':completion:*' file-sort name
-zstyle ':completion:*' format 'Completing %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' ignore-parents parent
-zstyle ':completion:*' list-suffixes true
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'r:|[._-]=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
-zstyle ':completion:*' match-original both
-zstyle ':completion:*' max-errors 2
-zstyle ':completion:*' preserve-prefix '//[^/]##/'
-zstyle ':completion:*' word true
-zstyle :compinstall filename '/home/kian/.zshrc'
+#zstyle ':completion:*' completer _expand _complete _ignored _match _correct _approximate _prefix
+#zstyle ':completion:*' expand prefix suffix
+#zstyle ':completion:*' file-sort name
+#zstyle ':completion:*' format 'Completing %d'
+#zstyle ':completion:*' group-name ''
+#zstyle ':completion:*' ignore-parents parent
+#zstyle ':completion:*' list-suffixes true
+#zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'r:|[._-]=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+#zstyle ':completion:*' match-original both
+#zstyle ':completion:*' max-errors 2
+#zstyle ':completion:*' preserve-prefix '//[^/]##/'
+#zstyle ':completion:*' word true
+#zstyle :compinstall filename '/home/kian/.zshrc'
 
 autoload -Uz compinit
 compinit
@@ -97,3 +91,6 @@ source $ZSH_CUSTOM/zsh_aliases
 
 # Set Vim as the editor
 export EDITOR=vim
+
+# Add custom config
+source ~/.zsh_custom
