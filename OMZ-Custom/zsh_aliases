@@ -12,5 +12,6 @@ alias grvt='git revert'
 
 # Other
 alias pubkey='less ~/.ssh/id_rsa.pub'
-
 alias cdpp='cd ~/Repos/paperless'
+alias vialias='vi $ZSH_CUSTOM/zsh_aliases && source $ZSH_CUSTOM/zsh_aliases'
+alias cdconfig='cd $CONFIG'
