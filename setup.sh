@@ -17,3 +17,6 @@ ln -s $DIR/vim/vimrc ~/.vimrc
 ln -s $DIR/ssh_config ~/.ssh/config
 ln -s $DIR/tmux.conf ~/.tmux.conf
 ln -s $DIR/gitconfig ~/.gitconfig
+
+# Install Vim plugins
+vim +PluginInstall +qall
