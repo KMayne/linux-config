@@ -55,34 +55,6 @@ export LANG=en_GB.UTF-8
 # ssh
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
-# Completion
-#zstyle ':completion:*' completer _expand _complete _ignored _match _correct _approximate _prefix
-#zstyle ':completion:*' expand prefix suffix
-#zstyle ':completion:*' file-sort name
-#zstyle ':completion:*' format 'Completing %d'
-#zstyle ':completion:*' group-name ''
-#zstyle ':completion:*' ignore-parents parent
-#zstyle ':completion:*' list-suffixes true
-#zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'r:|[._-]=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
-#zstyle ':completion:*' match-original both
-#zstyle ':completion:*' max-errors 2
-#zstyle ':completion:*' preserve-prefix '//[^/]##/'
-#zstyle ':completion:*' word true
-#zstyle :compinstall filename '/home/kian/.zshrc'
-
-autoload -Uz compinit
-compinit
-
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000000
-
-setopt appendhistory autocd
-unsetopt beep nomatch notify
-bindkey -v
-# End of lines configured by zsh-newuser-install
-
 # Hide user
 export DEFAULT_USER='kian'
 
@@ -91,6 +63,9 @@ source $ZSH_CUSTOM/zsh_aliases
 
 # Set Vim as the editor
 export EDITOR=vim
+
+# Set up node as development
+export NODE_ENV=development
 
 # Add custom config
 source ~/.zsh_custom
