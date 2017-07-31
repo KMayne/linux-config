@@ -24,6 +24,6 @@ ln -s $DIR/gitconfig ~/.gitconfig
 # Install Vim plugins
 vim +PluginInstall +qall
 
-# Ensure custom file exists
-touch ~/.zsh_custom
+# Set up $CONFIG
+echo "export CONFIG='$DIR'" >> ~/.zsh_custom
 
