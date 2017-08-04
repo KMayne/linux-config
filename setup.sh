@@ -2,15 +2,15 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Save old configuration
-mv .old-config .old-config-tmp 2>/dev/null
-mkdir .old-config
-mv .old-config-tmp .old-config/ 2>/dev/null
-mv ~/.zshrc .old-config 2>/dev/null
-mv ~/.vim .old-config 2>/dev/null
-mv ~/.vimrc .old-config 2>/dev/null
-mv ~/.ssh/config .old-config 2>/dev/null
-mv ~/.tmux.conf .old-config 2>/dev/null
-mv ~/.gitconfig .old-config 2>/dev/null
+mv ~/.old-config ~/.old-config-tmp 2>/dev/null
+mkdir ~/.old-config
+mv ~/.old-config-tmp ~/.old-config/ 2>/dev/null
+mv ~/.zshrc ~/.old-config 2>/dev/null
+mv ~/.vim ~/.old-config 2>/dev/null
+mv ~/.vimrc ~/.old-config 2>/dev/null
+mv ~/.ssh/config ~/.old-config 2>/dev/null
+mv ~/.tmux.conf ~/.old-config 2>/dev/null
+mv ~/.gitconfig ~/.old-config 2>/dev/null
 
 # Create symlinks for new config
 ln -s $DIR/zshrc ~/.zshrc
