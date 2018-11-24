@@ -14,7 +14,7 @@ mv ~/.gitconfig ~/.old-config 2>/dev/null
 
 # Create symlinks for new config
 ln -s $DIR/zshrc ~/.zshrc
-ln -s -d $DIR/vim ~/.vim
+ln -s $DIR/vim ~/.vim
 ln -s $DIR/vim/vimrc ~/.vimrc
 mkdir ~/.ssh 2>/dev/null
 ln -s $DIR/ssh_config ~/.ssh/config
