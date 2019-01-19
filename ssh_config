@@ -1,4 +1,3 @@
-IdentityFile ~/.ssh/id_rsa
 ServerAliveInterval 5
 
 Host km kianmayne.co.uk
