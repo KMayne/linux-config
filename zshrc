@@ -28,12 +28,12 @@ COMPLETION_WAITING_DOTS="true"
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-DISABLE_UNTRACKED_FILES_DIRTY="true"
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-HIST_STAMPS="dd/mm/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=~/Repos/config/OMZ-Custom
@@ -66,6 +66,9 @@ export EDITOR=vim
 
 # Set up node as development
 export NODE_ENV=development
+# Include global npm binaries in path
+export PATH=$PATH:~/.npm/bin/
 
 # Add custom config
 source ~/.zsh_custom
+
