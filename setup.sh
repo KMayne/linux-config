@@ -20,6 +20,7 @@ mkdir ~/.ssh 2>/dev/null
 ln -s $DIR/ssh_config ~/.ssh/config
 ln -s $DIR/tmux.conf ~/.tmux.conf
 ln -s $DIR/gitconfig ~/.gitconfig
+ln -s $DIR/npmrc ~/.npmrc
 
 # Install Vim plugins
 vim +PluginInstall +qall
