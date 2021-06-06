@@ -67,8 +67,9 @@ export EDITOR=vim
 # Set up node as development
 export NODE_ENV=development
 # Include global npm binaries in path
-export PATH=$PATH:~/.npm/bin/
+export PATH=~/.npm/bin:/$PATH
 
 # Add custom config
 source ~/.zsh_custom
 
+source $HOME/.cargo/env

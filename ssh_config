@@ -2,5 +2,5 @@ ServerAliveInterval 5
 
 Host km kianmayne.co.uk
   Hostname kianmayne.co.uk
-  Port 2014
+  Port 2222
   User kian
