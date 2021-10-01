@@ -73,3 +73,4 @@ export PATH=~/.npm/bin:/$PATH
 source ~/.zsh_custom
 
 source $HOME/.cargo/env
+
