@@ -25,6 +25,9 @@ ln -s $DIR/npmrc ~/.npmrc
 # Install Vim plugins
 vim +PluginInstall +qall
 
-# Set up $CONFIG
+# Set up $CONFIG and create ~/.zsh_custom file
 echo "export CONFIG='$DIR'" >> ~/.zsh_custom
+
+# Create local gitconfig to include
+touch ~/.gitconfig-local
 

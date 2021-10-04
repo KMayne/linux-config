@@ -7,6 +7,8 @@
 	default = simple
 [init]
 	defaultBranch = main
-
 [core]
 	autocrlf = false
+# Include device specific config
+[include]
+  path = ~/.gitconfig-local

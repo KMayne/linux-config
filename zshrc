@@ -42,11 +42,13 @@ ZSH_CUSTOM=~/Repos/config/OMZ-Custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git ssh-agent pj colored-man-pages command-not-found history zsh-syntax-highlighting)
+plugins=(git ssh-agent pj colored-man-pages command-not-found wakatime history zsh-prompt-benchmark zsh-syntax-highlighting)
 
 PROJECT_PATHS=(~/Repos)
 
 source $ZSH/oh-my-zsh.sh
+
+unsetopt AUTO_CD
 
 # User configuration
 # You may need to manually set your language environment
@@ -66,11 +68,14 @@ export EDITOR=vim
 
 # Set up node as development
 export NODE_ENV=development
-# Include global npm binaries in path
-export PATH=~/.npm/bin:/$PATH
+#
+# Include local binaries + global npm binaries in path
+export PATH=~/.local/bin:~/.npm/bin:/$PATH
 
 # Add custom config
 source ~/.zsh_custom
+
+source $ZSH_CUSTOM/bashmarks.sh
 
 source $HOME/.cargo/env
 

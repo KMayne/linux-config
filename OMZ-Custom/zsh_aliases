@@ -14,3 +14,9 @@ alias grvt='git revert'
 alias pubkey='less ~/.ssh/id_ed25519.pub'
 alias vialias='vi $ZSH_CUSTOM/zsh_aliases && source $ZSH_CUSTOM/zsh_aliases'
 alias cdconfig='cd $CONFIG'
+alias wsl='wsl.exe'
+
+function gnew () {
+  git fetch && git checkout --no-track -b $1 `git_main_branch`
+}
+
