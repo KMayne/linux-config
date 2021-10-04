@@ -4,3 +4,9 @@
 [submodule "OMZ-Custom/plugins/zsh-syntax-highlighting"]
 	path = OMZ-Custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "OMZ-Custom/plugins/wakatime"]
+	path = OMZ-Custom/plugins/wakatime
+	url = https://github.com/sobolevn/wakatime-zsh-plugin.git
+[submodule "/home/kian/Repos/config/OMZ-Custom/plugins/zsh-prompt-benchmark"]
+	path = /home/kian/Repos/config/OMZ-Custom/plugins/zsh-prompt-benchmark
+	url = https://github.com/romkatv/zsh-prompt-benchmark.git
