@@ -8,5 +8,5 @@
 	path = OMZ-Custom/plugins/wakatime
 	url = https://github.com/sobolevn/wakatime-zsh-plugin.git
 [submodule "/home/kian/Repos/config/OMZ-Custom/plugins/zsh-prompt-benchmark"]
-	path = /home/kian/Repos/config/OMZ-Custom/plugins/zsh-prompt-benchmark
+	path = OMZ-Custom/plugins/zsh-prompt-benchmark
 	url = https://github.com/romkatv/zsh-prompt-benchmark.git
