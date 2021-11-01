@@ -17,6 +17,6 @@ alias cdconfig='cd $CONFIG'
 alias wsl='wsl.exe'
 
 function gnew () {
-  git fetch && git checkout --no-track -b $1 `git_main_branch`
+  git fetch && git checkout --no-track -b $1 origin/`git_main_branch`
 }
 
