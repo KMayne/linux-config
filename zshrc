@@ -72,10 +72,12 @@ export NODE_ENV=development
 # Include local binaries + global npm binaries in path
 export PATH=~/.local/bin:~/.npm/bin:/$PATH
 
-# Add custom config
+# Add device-specific config
 source ~/.zsh_custom
 
 source $ZSH_CUSTOM/bashmarks.sh
+source $ZSH_CUSTOM/mouse.zsh
+bindkey -M emacs '\em' zle-toggle-mouse
 
 source $HOME/.cargo/env
 
