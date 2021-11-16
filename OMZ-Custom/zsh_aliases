@@ -5,17 +5,17 @@ function permalias () {
 
 alias virc='vi ~/.zshrc && source ~/.zshrc'
 
-# Git aliases
-alias ghr='git reset --hard'
-alias gundo='git reset HEAD~'
-alias grvt='git revert'
-
 # Other
 alias pubkey='less ~/.ssh/id_ed25519.pub'
 alias vialias='vi $ZSH_CUSTOM/zsh_aliases && source $ZSH_CUSTOM/zsh_aliases'
 alias cdconfig='cd $CONFIG'
 alias wsl='wsl.exe'
 
+# Git aliases
+alias ghr='git reset --hard'
+alias gundo='git reset HEAD~'
+alias grvt='git revert'
+alias gwip='gaa && gcam "WIP"'
 function gnew () {
   git fetch && git checkout --no-track -b $1 origin/`git_main_branch`
 }

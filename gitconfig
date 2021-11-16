@@ -13,3 +13,9 @@
 # Include device specific config
 [include]
   path = ~/.gitconfig-local
+[fetch]
+	prune = true
+[pull]
+	rebase = true
+[diff]
+	colorMoved = zebra
