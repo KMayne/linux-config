@@ -15,7 +15,7 @@ alias wsl='wsl.exe'
 alias ghr='git reset --hard'
 alias gundo='git reset HEAD~'
 alias grvt='git revert'
-alias gwip='gaa && gcam "WIP"'
+alias gwip='gaa && gcam "WIP" --no-gpg-sign'
 function gnew () {
   git fetch && git checkout --no-track -b $1 origin/`git_main_branch`
 }
