@@ -81,3 +81,5 @@ bindkey -M emacs '\em' zle-toggle-mouse
 
 source $HOME/.cargo/env
 
+# Add time to prompt
+RPROMPT="[%D{%H:%M:%S}]"
