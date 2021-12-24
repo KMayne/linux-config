@@ -42,7 +42,7 @@ ZSH_CUSTOM=~/Repos/config/OMZ-Custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git ssh-agent pj colored-man-pages command-not-found wakatime history zsh-prompt-benchmark zsh-syntax-highlighting)
+plugins=(git kubectl ssh-agent pj colored-man-pages command-not-found wakatime history zsh-prompt-benchmark zsh-syntax-highlighting)
 
 PROJECT_PATHS=(~/Repos)
 
