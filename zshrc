@@ -77,9 +77,11 @@ source ~/.zsh_custom
 
 source $ZSH_CUSTOM/bashmarks.sh
 source $ZSH_CUSTOM/mouse.zsh
+source $ZSH_CUSTOM/paste-perf-fix.zsh
 bindkey -M emacs '\em' zle-toggle-mouse
 
 source $HOME/.cargo/env
 
 # Add time to prompt
 RPROMPT="[%D{%H:%M:%S}]"
+
