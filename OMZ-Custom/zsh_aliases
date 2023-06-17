@@ -1,22 +1,18 @@
-function permalias () {
-  alias "$*"
-  echo alias "$*" >> $ZSH_CUSTOM/zsh_aliases
-}
-
 alias virc='vi ~/.zshrc && source ~/.zshrc'
-
-# Other
-alias pubkey='less ~/.ssh/id_ed25519.pub'
+alias vicustom='vi ~/.zsh_custom && source ~/.zsh_custom'
 alias vialias='vi $ZSH_CUSTOM/zsh_aliases && source $ZSH_CUSTOM/zsh_aliases'
-alias cdconfig='cd $CONFIG'
+
+alias pubkey='less ~/.ssh/id_ed25519.pub'
 alias wsl='wsl.exe'
 
 # Git aliases
 alias ghr='git reset --hard'
 alias gundo='git reset HEAD~'
 alias grvt='git revert'
-alias gwip='gaa && gcam "WIP" --no-gpg-sign'
+alias gwip='gaa && gcam "WIP" --no-gpg-sign --no-verify'
 function gnew () {
   git fetch && git checkout --no-track -b $1 origin/`git_main_branch`
 }
+alias gdn="git diff -- . ':!package-lock.json'"
+alias gcub='git_current_branch'
 

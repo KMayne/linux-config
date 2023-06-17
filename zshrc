@@ -42,13 +42,15 @@ ZSH_CUSTOM=~/Repos/config/OMZ-Custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git kubectl ssh-agent pj colored-man-pages command-not-found wakatime history zsh-prompt-benchmark zsh-syntax-highlighting)
+plugins=(git ssh-agent kubectl pj colored-man-pages command-not-found wakatime history zsh-prompt-benchmark zsh-syntax-highlighting)
 
 PROJECT_PATHS=(~/Repos)
 
 source $ZSH/oh-my-zsh.sh
 
 unsetopt AUTO_CD
+unsetopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY_TIME
 
 # User configuration
 # You may need to manually set your language environment
@@ -82,6 +84,21 @@ bindkey -M emacs '\em' zle-toggle-mouse
 
 source $HOME/.cargo/env
 
-# Add time to prompt
-RPROMPT="[%D{%H:%M:%S}]"
+# Add time + last elapsed time to prompt
+function preexec() {
+  timer=$SECONDS
+}
+
+function precmd() {
+  if [ $timer ]; then
+    now=$SECONDS
+    elapsed=$(($now-$timer))
+
+    export RPROMPT="%F{cyan}${elapsed}s %{$reset_color%} [%D{%H:%M:%S}]"
+    unset timer
+  else
+    RPROMPT="[%D{%H:%M:%S}]"
+  fi
+}
+
 
