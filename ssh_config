@@ -4,3 +4,7 @@ Host km kianmayne.co.uk
   Hostname kianmayne.co.uk
   Port 2222
   User kian
+
+Host loki
+  Hostname 192.168.1.82
+

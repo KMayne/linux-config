@@ -11,6 +11,7 @@ mv ~/.vimrc ~/.old-config 2>/dev/null
 mv ~/.ssh/config ~/.old-config 2>/dev/null
 mv ~/.tmux.conf ~/.old-config 2>/dev/null
 mv ~/.gitconfig ~/.old-config 2>/dev/null
+mv ~/.npmrc ~/.old-config 2>/dev/null
 
 # Create symlinks for new config
 ln -s $DIR/zshrc ~/.zshrc
@@ -21,6 +22,7 @@ ln -s $DIR/ssh_config ~/.ssh/config
 ln -s $DIR/tmux.conf ~/.tmux.conf
 ln -s $DIR/gitconfig ~/.gitconfig
 ln -s $DIR/npmrc ~/.npmrc
+ln -s $DIR/wsl-git ~/.local/bin/git
 
 # Install Vim plugins
 vim +PluginInstall +qall
@@ -30,4 +32,6 @@ echo "export CONFIG='$DIR'" >> ~/.zsh_custom
 
 # Create local gitconfig to include
 touch ~/.gitconfig-local
+mkdir -p ~/.cargo
+touch ~/.cargo/env
 
