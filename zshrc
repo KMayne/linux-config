@@ -71,8 +71,8 @@ export EDITOR=vim
 # Set up node as development
 export NODE_ENV=development
 #
-# Include local binaries + global npm binaries in path
-export PATH=~/.local/bin:~/.npm/bin:/$PATH
+# Include local binaries + global npm binaries in path + Snaps
+export PATH=~/.local/bin:~/.npm/bin:/$PATH:/snap/bin
 
 # Add device-specific config
 source ~/.zsh_custom
@@ -100,5 +100,4 @@ function precmd() {
     RPROMPT="[%D{%H:%M:%S}]"
   fi
 }
-
 
