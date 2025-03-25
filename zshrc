@@ -42,7 +42,7 @@ ZSH_CUSTOM=~/Repos/config/OMZ-Custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git ssh-agent kubectl pj colored-man-pages command-not-found wakatime history zsh-prompt-benchmark zsh-syntax-highlighting)
+plugins=(git kubectl pj colored-man-pages command-not-found wakatime history zsh-prompt-benchmark zsh-syntax-highlighting)
 
 PROJECT_PATHS=(~/Repos)
 
@@ -55,9 +55,6 @@ setopt INC_APPEND_HISTORY_TIME
 # User configuration
 # You may need to manually set your language environment
 export LANG=en_GB.UTF-8
-
-# ssh
-export SSH_KEY_PATH="~/.ssh/id_rsa"
 
 # Hide user
 export DEFAULT_USER='kian'

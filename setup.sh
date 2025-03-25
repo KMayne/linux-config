@@ -23,7 +23,6 @@ ln -s $DIR/tmux.conf ~/.tmux.conf
 ln -s $DIR/gitconfig ~/.gitconfig
 ln -s $DIR/npmrc ~/.npmrc
 mkdir -p ~/.local/bin
-ln -s $DIR/wsl-git ~/.local/bin/git
 
 # Install Vim plugins
 vim +PluginInstall +qall
