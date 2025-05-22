@@ -4,7 +4,7 @@ const { exec, spawn } = require('child_process');
 
 const config = {
   blink: [
-    'Blink -',
+    'Blink',
     [
       '/opt/google/chrome/google-chrome',
       '--profile-directory=Default',
@@ -95,7 +95,9 @@ async function main() {
     console.debug(`Activated window with ID: ${windowId}`);
   }
 }
-main().catch(err => {
+main()
+.then(() => process.exit(0))
+.catch(err => {
   console.error(`Error: ${err}`);
   process.exit(1);
 });
