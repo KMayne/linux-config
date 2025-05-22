@@ -5,6 +5,8 @@ alias vialias='vi $ZSH_CUSTOM/zsh_aliases && source $ZSH_CUSTOM/zsh_aliases'
 alias pubkey='less ~/.ssh/id_ed25519.pub'
 alias wsl='wsl.exe'
 
+alias sdi='sudo dnf install -y'
+
 # Git aliases
 alias ghr='git reset --hard'
 alias gundo='git reset HEAD~'
@@ -22,4 +24,6 @@ alias grc='gh repo clone'
 function gbclean () {
   git branch | grep '^[^*]' | grep -vE '^\s+experiment/' | xargs git branch -d
 }
+
+alias bosh=bash
 
