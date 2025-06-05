@@ -4,17 +4,18 @@ const { exec, spawn } = require('child_process');
 
 const config = {
   blink: [
-    'Blink',
+    '• Blink',
     [
       '/opt/google/chrome/google-chrome',
       '--profile-directory=Default',
       '--app-id=nbjihfimkbmgnfhjgpinlonjmecnigia'
-    ]
+    ],
+    'Jetbrains'
   ],
   chrome: [
     'google-chrome',
     ['/usr/bin/google-chrome-stable'],
-    "Blink -"
+    "• Blink"
   ],
   code: [
     'Visual Studio Code',
