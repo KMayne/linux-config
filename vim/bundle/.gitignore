@@ -1,4 +1,0 @@
-# Ignore all but Vundle
-*
-!.gitignore
-!Vundle.vim

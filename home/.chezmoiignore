@@ -1,0 +1,7 @@
+{{ if not .wsl }}
+.local/bin/git
+.config/zsh/omz-custom/osc-code.zsh
+{{ end }}
+{{ if not .kde }}
+.local/bin/run-or-raise
+{{ end }}
