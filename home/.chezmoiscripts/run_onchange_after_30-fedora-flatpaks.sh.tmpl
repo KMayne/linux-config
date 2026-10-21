@@ -1,0 +1,13 @@
+{{ if and (eq .distro "fedora") (not .wsl) -}}
+#!/bin/bash
+# Installs Flatpaks from .chezmoidata/packages.yaml. Reruns when that list changes.
+set -euo pipefail
+echo "==> Installing Flatpaks"
+
+apps=(
+{{- range .packages.fedora.flatpak }}
+  {{ . | quote }}
+{{- end }}
+)
+sudo flatpak install -y --noninteractive flathub "${apps[@]}"
+{{ end -}}

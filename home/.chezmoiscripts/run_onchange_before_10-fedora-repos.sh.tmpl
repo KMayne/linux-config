@@ -4,7 +4,7 @@
 set -euo pipefail
 echo "==> Adding package repos"
 
-sudo dnf install -y 'dnf-command(copr)'
+sudo dnf install -y 'dnf-command(copr)' flatpak
 {{ range .packages.fedora.copr -}}
 sudo dnf copr enable -y {{ . | quote }}
 {{ end }}
@@ -29,4 +29,6 @@ gpgcheck=1
 gpgkey=https://dl.google.com/linux/linux_signing_key.pub
 REPO
 {{- end }}
+
+sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 {{ end -}}

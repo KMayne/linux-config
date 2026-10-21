@@ -19,3 +19,7 @@ packages:
     # Only on x86_64: no arm64 RPMs from these vendors (matters for Asahi)
     dnf_x86_64:
       - google-chrome-stable
+    flatpak:
+      - com.getpostman.Postman
+      - com.spotify.Client
+      - io.kinvolk.Headlamp   # Kubernetes UI

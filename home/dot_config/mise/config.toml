@@ -6,6 +6,7 @@
 node = "26"
 go = "latest"
 rust = "stable"
+kubectl = "latest"
 
 [settings]
 # Honour .nvmrc / .node-version files in projects
