@@ -71,6 +71,11 @@ export NODE_ENV=development
 # Include local binaries + global npm binaries in path + Snaps
 export PATH=~/.local/bin:~/.npm/bin:/$PATH:/snap/bin
 
+# Language toolchains (node, go, rust) come from mise: ~/.config/mise/config.toml
+if command -v mise >/dev/null; then
+  eval "$(mise activate zsh)"
+fi
+
 # Add device-specific config
 source ~/.zsh_custom
 
@@ -79,7 +84,6 @@ source $ZSH_CUSTOM/mouse.zsh
 source $ZSH_CUSTOM/paste-perf-fix.zsh
 bindkey -M emacs '\em' zle-toggle-mouse
 
-source $HOME/.cargo/env
 
 # Add time + last elapsed time to prompt
 function preexec() {

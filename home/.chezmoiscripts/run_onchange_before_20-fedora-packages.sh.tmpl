@@ -1,0 +1,18 @@
+{{ if eq .distro "fedora" -}}
+#!/bin/bash
+# Installs dnf packages from .chezmoidata/packages.yaml. Reruns when that list changes.
+set -euo pipefail
+echo "==> Installing dnf packages"
+
+pkgs=(
+{{- range .packages.fedora.dnf }}
+  {{ . | quote }}
+{{- end }}
+{{- if eq .chezmoi.arch "amd64" }}
+{{- range .packages.fedora.dnf_x86_64 }}
+  {{ . | quote }}
+{{- end }}
+{{- end }}
+)
+sudo dnf install -y "${pkgs[@]}"
+{{ end -}}

@@ -1,0 +1,12 @@
+# Language toolchains, identical on every machine (Fedora, WSL, arm64).
+# Add a tool with `mise use -g <tool>@<version>`, then `chezmoi re-add ~/.config/mise/config.toml`.
+# Pin a project-specific version with a mise.toml (or .nvmrc) in that repo instead.
+
+[tools]
+node = "26"
+go = "latest"
+rust = "stable"
+
+[settings]
+# Honour .nvmrc / .node-version files in projects
+idiomatic_version_file_enable_tools = ["node"]
