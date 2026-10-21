@@ -16,8 +16,9 @@ ZSH_THEME="agnoster"
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
-# Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=7
+# Oh My Zsh is downloaded and refreshed weekly by chezmoi (.chezmoiexternal.toml),
+# so its own updater is switched off.
+zstyle ':omz:update' mode disabled
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
@@ -36,13 +37,17 @@ COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=~/Repos/config/OMZ-Custom
+ZSH_CUSTOM=~/.config/zsh/omz-custom
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+{{ if .wsl -}}
+plugins=(git ssh-agent kubectl pj colored-man-pages command-not-found wakatime history zsh-syntax-highlighting)
+{{- else -}}
 plugins=(git kubectl pj colored-man-pages command-not-found wakatime history zsh-prompt-benchmark zsh-syntax-highlighting)
+{{- end }}
 
 PROJECT_PATHS=(~/Repos)
 
@@ -55,7 +60,10 @@ setopt INC_APPEND_HISTORY_TIME
 # User configuration
 # You may need to manually set your language environment
 export LANG=en_GB.UTF-8
-
+{{ if .wsl }}
+# ssh
+export SSH_KEY_PATH="~/.ssh/id_rsa"
+{{ end }}
 # Hide user
 export DEFAULT_USER='kian'
 
@@ -67,23 +75,22 @@ export EDITOR=vim
 
 # Set up node as development
 export NODE_ENV=development
-#
-# Include local binaries + global npm binaries in path + Snaps
-export PATH=~/.local/bin:~/.npm/bin:/$PATH:/snap/bin
+
+# Include local binaries in path
+export PATH=~/.local/bin:$PATH
 
 # Language toolchains (node, go, rust) come from mise: ~/.config/mise/config.toml
 if command -v mise >/dev/null; then
   eval "$(mise activate zsh)"
 fi
 
-# Add device-specific config
-source ~/.zsh_custom
+# Add device-specific config (not managed by chezmoi)
+[[ -f ~/.zsh_custom ]] && source ~/.zsh_custom
 
 source $ZSH_CUSTOM/bashmarks.sh
 source $ZSH_CUSTOM/mouse.zsh
 source $ZSH_CUSTOM/paste-perf-fix.zsh
 bindkey -M emacs '\em' zle-toggle-mouse
-
 
 # Add time + last elapsed time to prompt
 function preexec() {

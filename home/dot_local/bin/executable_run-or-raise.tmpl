@@ -23,7 +23,7 @@ const config = {
   ],
   datagrip: [
     'jetbrains-datagrip',
-    ['/home/kian/.local/share/JetBrains/Toolbox/apps/datagrip/bin/datagrip']
+    ['{{ .chezmoi.homeDir }}/.local/share/JetBrains/Toolbox/apps/datagrip/bin/datagrip']
   ],
   firefox: [
     'org.mozilla.firefox',
@@ -31,7 +31,7 @@ const config = {
   ],
   intellij: [
     'jetbrains-idea',
-    ['/home/kian/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea']
+    ['{{ .chezmoi.homeDir }}/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea']
   ],
   lens: [
     'Lens',
@@ -39,27 +39,11 @@ const config = {
   ],
   postman: [
     'Postman',
-    [
-      '/usr/bin/flatpak',
-      'run',
-      '--branch=stable',
-      '--arch=x86_64',
-      '--command=Postman',
-      '--file-forwarding',
-      'com.getpostman.Postman'
-    ]
+    ['/usr/bin/flatpak', 'run', 'com.getpostman.Postman']
   ],
   spotify: [
     'Spotify',
-    [
-      '/usr/bin/flatpak',
-      'run',
-      '--branch=stable',
-      '--arch=x86_64',
-      '--command=spotify',
-      '--file-forwarding',
-      'com.spotify.Client'
-    ]
+    ['/usr/bin/flatpak', 'run', 'com.spotify.Client']
   ],
   terminal: [
     'Konsole',

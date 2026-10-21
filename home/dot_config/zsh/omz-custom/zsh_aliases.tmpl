@@ -1,11 +1,16 @@
-alias virc='vi ~/.zshrc && source ~/.zshrc'
+# These files are managed by chezmoi: `chezmoi edit` changes the repo copy and applies it
+alias virc='chezmoi edit ~/.zshrc && source ~/.zshrc'
 alias vicustom='vi ~/.zsh_custom && source ~/.zsh_custom'
-alias vialias='vi $ZSH_CUSTOM/zsh_aliases && source $ZSH_CUSTOM/zsh_aliases'
+alias vialias='chezmoi edit $ZSH_CUSTOM/zsh_aliases && source $ZSH_CUSTOM/zsh_aliases'
+alias cza='chezmoi apply'
+alias czcd='chezmoi cd'
 
 alias pubkey='less ~/.ssh/id_ed25519.pub'
+{{ if .wsl -}}
 alias wsl='wsl.exe'
-
+{{- else -}}
 alias sdi='sudo dnf install -y'
+{{- end }}
 
 # Git aliases
 alias ghr='git reset --hard'

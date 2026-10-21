@@ -1,0 +1,8 @@
+#!/bin/bash
+# wakatime-cli for the wakatime zsh plugin, using WakaTime's own installer (~/.wakatime/wakatime-cli)
+set -euo pipefail
+
+if [[ ! -x "$HOME/.wakatime/wakatime-cli" ]]; then
+  echo "==> Installing wakatime-cli"
+  python3 -c "$(curl -fsSL https://raw.githubusercontent.com/wakatime/vim-wakatime/master/scripts/install_cli.py)"
+fi
