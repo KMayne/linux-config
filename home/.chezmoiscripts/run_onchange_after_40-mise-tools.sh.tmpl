@@ -1,0 +1,13 @@
+#!/bin/bash
+# Installs the toolchains in ~/.config/mise/config.toml. Reruns when that file changes.
+# config hash: {{ include "dot_config/mise/config.toml" | sha256sum }}
+set -euo pipefail
+echo "==> Installing mise toolchains"
+
+export PATH="$HOME/.local/bin:$PATH"
+if ! command -v mise >/dev/null; then
+  # Fedora gets mise from the COPR; elsewhere use the official installer (~/.local/bin/mise)
+  curl -fsSL https://mise.run | sh
+fi
+
+mise install --yes

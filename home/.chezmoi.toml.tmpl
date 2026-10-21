@@ -1,0 +1,21 @@
+{{- /* Worked out once at `chezmoi init`; rerun `chezmoi init` to re-detect. */ -}}
+{{- $wsl := contains "microsoft" (lower .chezmoi.kernel.osrelease) -}}
+{{- $kde := contains "KDE" (env "XDG_CURRENT_DESKTOP") -}}
+{{- /* Normalise distro so Fedora spins/remixes (e.g. Asahi) count as fedora */ -}}
+{{- $id := .chezmoi.osRelease.id -}}
+{{- $like := get .chezmoi.osRelease "idLike" | default "" -}}
+{{- $distro := $id -}}
+{{- if or (eq $id "fedora") (contains "fedora" $like) -}}{{ $distro = "fedora" }}{{- end -}}
+{{- if or (eq $id "ubuntu") (contains "ubuntu" $like) -}}{{ $distro = "ubuntu" }}{{- end -}}
+
+# Remember where the repo lives (the .chezmoiroot parent), so a clone outside
+# ~/.local/share/chezmoi keeps working after `chezmoi init --source <repo>`
+sourceDir = {{ .chezmoi.workingTree | quote }}
+
+[data]
+    wsl = {{ $wsl }}
+    kde = {{ $kde }}
+    distro = {{ $distro | quote }}
+
+[edit]
+    apply = true

@@ -1,0 +1,32 @@
+{{ if eq .distro "fedora" -}}
+#!/bin/bash
+# Adds third-party package repos. Reruns whenever this script or the COPR list changes.
+set -euo pipefail
+echo "==> Adding package repos"
+
+sudo dnf install -y 'dnf-command(copr)'
+{{ range .packages.fedora.copr -}}
+sudo dnf copr enable -y {{ . | quote }}
+{{ end }}
+sudo tee /etc/yum.repos.d/vscode.repo >/dev/null <<'REPO'
+[code]
+name=Visual Studio Code
+baseurl=https://packages.microsoft.com/yumrepos/vscode
+enabled=1
+autorefresh=1
+type=rpm-md
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+REPO
+{{- if eq .chezmoi.arch "amd64" }}
+
+sudo tee /etc/yum.repos.d/google-chrome.repo >/dev/null <<'REPO'
+[google-chrome]
+name=google-chrome
+baseurl=https://dl.google.com/linux/chrome/rpm/stable/x86_64
+enabled=1
+gpgcheck=1
+gpgkey=https://dl.google.com/linux/linux_signing_key.pub
+REPO
+{{- end }}
+{{ end -}}

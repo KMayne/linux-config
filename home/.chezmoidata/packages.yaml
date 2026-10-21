@@ -1,0 +1,21 @@
+# Software to install. Edit a list, run `chezmoi apply`, and only the install
+# scripts whose list changed rerun.
+
+packages:
+  fedora:
+    # VS Code and Chrome repos are added in .chezmoiscripts/run_onchange_before_10-fedora-repos
+    copr:
+      - jdxcode/mise
+    dnf:
+      - git
+      - zsh
+      - vim-enhanced
+      - gh
+      - chezmoi
+      - ShellCheck
+      - gcc                # C linker for Rust crates
+      - mise
+      - code
+    # Only on x86_64: no arm64 RPMs from these vendors (matters for Asahi)
+    dnf_x86_64:
+      - google-chrome-stable
