@@ -8,6 +8,8 @@
 set -euo pipefail
 
 REPO="https://github.com/KMayne/linux-config.git"
+# Set BRANCH to try another branch; any arguments are passed to `chezmoi init`
+BRANCH="${BRANCH:-main}"
 export PATH="$HOME/.local/bin:$PATH"
 
 # Ask for the sudo password once, up front
@@ -26,7 +28,7 @@ fi
 if chezmoi source-path >/dev/null 2>&1 && [[ -d "$(chezmoi source-path)" ]]; then
   chezmoi update
 else
-  chezmoi init --apply "$REPO"
+  chezmoi init --apply --branch "$BRANCH" "$@" "$REPO"
 fi
 
 echo

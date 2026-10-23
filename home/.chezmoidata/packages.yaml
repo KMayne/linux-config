@@ -31,3 +31,16 @@ packages:
       - com.getpostman.Postman
       - com.spotify.Client
       - io.kinvolk.Headlamp   # Kubernetes UI
+
+  ubuntu:
+    apt:
+      - zsh
+      - vim
+      - tmux
+      - git
+      - gh
+      - curl
+      - jq
+      - python3            # wakatime-cli installer
+      - build-essential    # C linker for Rust crates
+      - shellcheck
