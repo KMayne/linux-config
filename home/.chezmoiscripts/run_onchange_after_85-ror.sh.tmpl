@@ -1,0 +1,28 @@
+{{ if .kde -}}
+#!/bin/bash
+# ror: run-or-raise shortcuts for KDE (github.com/KMayne/ror, private).
+# Installs it with cargo if missing, then applies ~/.config/ror/config.json (a symlink to
+# linked/ror/config.json in this repo) to KWin. Reruns when that config changes.
+# config hash: {{ joinPath .chezmoi.workingTree "linked/ror/config.json" | include | sha256sum }}
+set -euo pipefail
+echo "==> Setting up ror"
+
+export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
+
+if ! command -v ror >/dev/null; then
+  # The repo is private, so this needs a GitHub SSH key
+  if ! git ls-remote ssh://git@github.com/KMayne/ror.git HEAD >/dev/null 2>&1; then
+    echo "    Skipping ror: no GitHub SSH access yet. Add your key, then run: chezmoi apply"
+    # Fail so chezmoi retries this script on the next apply
+    exit 1
+  fi
+  mise exec -- cargo install --git ssh://git@github.com/KMayne/ror.git --branch ror-mvp --locked
+fi
+
+ror apply
+
+# The daemon (tray icon, settings window) sets up its own autostart on first run
+if [[ -n "${WAYLAND_DISPLAY:-}" ]] && ! pgrep -u "$USER" -f 'ror daemon' >/dev/null; then
+  setsid -f ror daemon >/dev/null 2>&1
+fi
+{{ end -}}
