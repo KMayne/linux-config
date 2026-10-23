@@ -1,13 +1,17 @@
 {{ if .kde -}}
 #!/bin/bash
 # Applies .chezmoidata/plasma.yaml. Reruns when it changes. Only the listed settings are touched.
+# - lookAndFeel: global theme for this machine type (personal/work), if it differs
+# - touchpad: set on every touchpad KWin knows about
 # - shortcuts: written to ~/.config/kglobalshortcutsrc and, if Plasma is running, set live over D-Bus
 # - config: written with kwriteconfig6 --notify, then KWin is told to reload
 set -euo pipefail
 echo "==> Applying KDE settings"
 
-python3 - {{ .plasma | toJson | squote }} <<'PY'
-import json, subprocess, sys
+python3 - {{ .plasma | toJson | squote }} {{ if .work }}work{{ else }}personal{{ end }} <<'PY'
+import json, re, subprocess, sys
+
+plasma, machine_type = json.loads(sys.argv[1]), sys.argv[2]
 
 MODS = {"Meta": 0x10000000, "Ctrl": 0x04000000, "Alt": 0x08000000, "Shift": 0x02000000}
 KEYS = {
@@ -15,11 +19,13 @@ KEYS = {
     "Enter": 0x01000005, "Ins": 0x01000006, "Del": 0x01000007, "Print": 0x01000009,
     "Home": 0x01000010, "End": 0x01000011, "Left": 0x01000012, "Up": 0x01000013,
     "Right": 0x01000014, "Down": 0x01000015, "PgUp": 0x01000016, "PgDown": 0x01000017,
-    "Space": 0x20,
+    "Space": 0x20, "Launch (C)": 0x010000AE,
 }
 
+
 def keycode(combo):
-    *mods, key = combo.split("+")
+    """Qt key code for a KDE shortcut string like "Meta+Shift+S"."""
+    *mods, key = combo.split("+") if not combo.endswith("++") else combo[:-2].split("+") + ["+"]
     code = 0
     for m in mods:
         code |= MODS[m]
@@ -33,54 +39,113 @@ def keycode(combo):
         sys.exit(f"Unknown key {key!r} in {combo!r}; add it to KEYS")
     return code
 
-def read(group, key):
-    return subprocess.run(
-        ["kreadconfig6", "--file", "kglobalshortcutsrc", "--group", group, "--key", key],
-        capture_output=True, text=True, check=True).stdout.rstrip("\n")
+
+def run(*cmd, **kw):
+    return subprocess.run(cmd, check=True, text=True, **kw)
+
+
+def ok(*cmd):
+    return subprocess.run(cmd, capture_output=True).returncode == 0
+
+
+def gdbus(dest, path, method, *args, check=True):
+    return subprocess.run(["gdbus", "call", "--session", "--dest", dest, "--object-path", path,
+                           "--method", method, *args], capture_output=True, text=True, check=check).stdout
+
+
+def kread(file, group, key):
+    groups = [a for g in group.split("][") for a in ("--group", g)]
+    return run("kreadconfig6", "--file", file, *groups, "--key", key, capture_output=True).stdout.rstrip("\n")
+
+
+def kwrite(file, group, key, value, notify=True):
+    if isinstance(value, bool):
+        value = "true" if value else "false"
+    groups = [a for g in group.split("][") for a in ("--group", g)]
+    run("kwriteconfig6", *(["--notify"] if notify else []), "--file", file, *groups, "--key", key, str(value))
+
 
 def gv_str(s):
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
-live = subprocess.run(
-    ["gdbus", "call", "--session", "--dest", "org.kde.kglobalaccel", "--object-path",
-     "/kglobalaccel", "--method", "org.freedesktop.DBus.Peer.Ping"],
-    capture_output=True).returncode == 0
 
-plasma = json.loads(sys.argv[1])
-for component, actions in (plasma.get("shortcuts") or {}).items():
-    component_name = read(component, "_k_friendly_name") or component
-    # Clear shortcuts first so their keys are free for the actions that take them over
-    for action, keys in sorted(actions.items(), key=lambda kv: bool(kv[1])):
+live = ok("gdbus", "call", "--session", "--dest", "org.kde.KWin", "--object-path", "/KWin",
+          "--method", "org.freedesktop.DBus.Peer.Ping")
+
+# Global theme
+theme = (plasma.get("lookAndFeel") or {}).get(machine_type)
+if theme and kread("kdeglobals", "KDE", "LookAndFeelPackage") != theme:
+    if live:
+        run("plasma-apply-lookandfeel", "--apply", theme, stdout=subprocess.DEVNULL)
+        print(f"    theme: {theme}")
+    else:
+        print(f"    theme: skipped ({theme} needs a running Plasma session)")
+
+# Touchpads: KWin exposes each input device on D-Bus with its vendor/product ids and settings
+touchpad = plasma.get("touchpad") or {}
+if touchpad and live:
+    names = gdbus("org.kde.KWin", "/org/kde/KWin/InputDevice", "org.freedesktop.DBus.Properties.Get",
+                  "org.kde.KWin.InputDeviceManager", "devicesSysNames")
+    for sysname in re.findall(r"'(event\d+)'", names):
+        path = f"/org/kde/KWin/InputDevice/{sysname}"
+        props = gdbus("org.kde.KWin", path, "org.freedesktop.DBus.Properties.GetAll", "org.kde.KWin.InputDevice")
+        if "'touchpad': <true>" not in props:
+            continue
+        name = re.search(r"'name': <'([^']*)'>", props).group(1)
+        vendor = re.search(r"'vendor': <uint32 (\d+)>", props).group(1)
+        product = re.search(r"'product': <uint32 (\d+)>", props).group(1)
+        for prop, value in touchpad.items():
+            gv = ("true" if value else "false") if isinstance(value, bool) else repr(float(value)) if isinstance(value, float) else str(value)
+            gdbus("org.kde.KWin", path, "org.freedesktop.DBus.Properties.Set", "org.kde.KWin.InputDevice", prop, f"<{gv}>")
+            # Same setting in KDE's per-device config, so it survives a restart
+            kwrite("kcminputrc", f"Libinput][{vendor}][{product}][{name}", prop[0].upper() + prop[1:], value)
+            print(f"    touchpad {name}: {prop}={value}")
+elif touchpad:
+    print("    touchpad: skipped (needs a running Plasma session)")
+
+# Shortcuts. Normal actions are stored as "keys,default keys,name"; app launchers
+# ("services][x.desktop") just as "keys".
+shortcuts = plasma.get("shortcuts") or {}
+targets = []
+for component, actions in shortcuts.items():
+    service = component.startswith("services][")
+    unique = component.split("][", 1)[1] if service else component
+    friendly = "" if service else (kread("kglobalshortcutsrc", component, "_k_friendly_name") or component)
+    for action, keys in actions.items():
         keys = keys or []
-        codes = [keycode(k) for k in keys]
-        _, default, name = (read(component, action).split(",", 2) + ["", ""])[:3]
-        value = "\t".join(keys) if keys else "none"
-        subprocess.run(["kwriteconfig6", "--file", "kglobalshortcutsrc", "--group", component,
-                        "--key", action, f"{value},{default},{name}"], check=True)
-        if live:
-            action_id = "[" + ", ".join(gv_str(s) for s in (component, action, component_name, name)) + "]"
-            gv_keys = "[" + ", ".join(f"([{c}, 0, 0, 0],)" for c in codes) + "]" if codes else "@a(ai) []"
-            subprocess.run(["gdbus", "call", "--session", "--dest", "org.kde.kglobalaccel",
-                            "--object-path", "/kglobalaccel", "--method",
-                            "org.kde.KGlobalAccel.setForeignShortcutKeys", action_id, gv_keys],
-                           check=True, stdout=subprocess.DEVNULL)
+        current = kread("kglobalshortcutsrc", component, action)
+        if service:
+            value = "\t".join(keys) if keys else "none"
+            name = ""
+        else:
+            _, default, name = (current.split(",", 2) + ["", ""])[:3]
+            value = f"{chr(9).join(keys) if keys else 'none'},{default},{name}"
+        kwrite("kglobalshortcutsrc", component, action, value, notify=False)
+        action_id = "[" + ", ".join(gv_str(s) for s in (unique, action, friendly, name)) + "]"
+        targets.append((action_id, [keycode(k) for k in keys]))
         print(f"    {component} / {action}: {', '.join(keys) or '(none)'}")
+
+if live and targets:
+    def set_keys(action_id, codes):
+        gv = "[" + ", ".join(f"([{c}, 0, 0, 0],)" for c in codes) + "]" if codes else "@a(ai) []"
+        gdbus("org.kde.kglobalaccel", "/kglobalaccel", "org.kde.KGlobalAccel.setForeignShortcutKeys", action_id, gv)
+    # Clear everything first so a key moving between actions is never held by both
+    for action_id, _ in targets:
+        set_keys(action_id, [])
+    for action_id, codes in targets:
+        if codes:
+            set_keys(action_id, codes)
 
 # Plain settings: file -> group (nested groups written "A][B") -> key -> value
 for fname, groups in (plasma.get("config") or {}).items():
     for group, entries in groups.items():
-        group_args = [a for g in group.split("][") for a in ("--group", g)]
         for key, value in entries.items():
-            if isinstance(value, bool):
-                value = "true" if value else "false"
-            subprocess.run(["kwriteconfig6", "--notify", "--file", fname, *group_args,
-                            "--key", key, str(value)], check=True)
-            print(f"    {fname} [{group}] {key}={value}")
+            kwrite(fname, group, key, value)
+    print(f"    {fname}: {sum(len(e) for e in groups.values())} settings")
 
 if live:
-    subprocess.run(["gdbus", "call", "--session", "--dest", "org.kde.KWin", "--object-path",
-                    "/KWin", "--method", "org.kde.KWin.reconfigure"], stdout=subprocess.DEVNULL)
+    gdbus("org.kde.KWin", "/KWin", "org.kde.KWin.reconfigure", check=False)
 else:
-    print("    Plasma isn't running; changes take effect at next login")
+    print("    Plasma isn't running; shortcuts and settings take effect at next login")
 PY
 {{ end -}}
