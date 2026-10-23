@@ -1,0 +1,71 @@
+{{ if .kde -}}
+#!/bin/bash
+# Sets the global shortcuts listed in .chezmoidata/plasma.yaml. Reruns when that list changes.
+# Writes ~/.config/kglobalshortcutsrc (for the next login) and, if Plasma is running,
+# updates KWin's shortcut service over D-Bus so the change is live straight away.
+set -euo pipefail
+echo "==> Setting KDE shortcuts"
+
+python3 - {{ .plasma.shortcuts | toJson | squote }} <<'PY'
+import json, subprocess, sys
+
+MODS = {"Meta": 0x10000000, "Ctrl": 0x04000000, "Alt": 0x08000000, "Shift": 0x02000000}
+KEYS = {
+    "Esc": 0x01000000, "Tab": 0x01000001, "Backspace": 0x01000003, "Return": 0x01000004,
+    "Enter": 0x01000005, "Ins": 0x01000006, "Del": 0x01000007, "Print": 0x01000009,
+    "Home": 0x01000010, "End": 0x01000011, "Left": 0x01000012, "Up": 0x01000013,
+    "Right": 0x01000014, "Down": 0x01000015, "PgUp": 0x01000016, "PgDown": 0x01000017,
+    "Space": 0x20,
+}
+
+def keycode(combo):
+    *mods, key = combo.split("+")
+    code = 0
+    for m in mods:
+        code |= MODS[m]
+    if key in KEYS:
+        code |= KEYS[key]
+    elif len(key) == 1:
+        code |= ord(key.upper())
+    elif key[0] == "F" and key[1:].isdigit():
+        code |= 0x01000030 + int(key[1:]) - 1
+    else:
+        sys.exit(f"Unknown key {key!r} in {combo!r}; add it to KEYS")
+    return code
+
+def read(group, key):
+    return subprocess.run(
+        ["kreadconfig6", "--file", "kglobalshortcutsrc", "--group", group, "--key", key],
+        capture_output=True, text=True, check=True).stdout.rstrip("\n")
+
+def gv_str(s):
+    return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+live = subprocess.run(
+    ["gdbus", "call", "--session", "--dest", "org.kde.kglobalaccel", "--object-path",
+     "/kglobalaccel", "--method", "org.freedesktop.DBus.Peer.Ping"],
+    capture_output=True).returncode == 0
+
+shortcuts = json.loads(sys.argv[1])
+for component, actions in shortcuts.items():
+    component_name = read(component, "_k_friendly_name") or component
+    # Clear shortcuts first so their keys are free for the actions that take them over
+    for action, keys in sorted(actions.items(), key=lambda kv: bool(kv[1])):
+        keys = keys or []
+        codes = [keycode(k) for k in keys]
+        _, default, name = (read(component, action).split(",", 2) + ["", ""])[:3]
+        value = "\t".join(keys) if keys else "none"
+        subprocess.run(["kwriteconfig6", "--file", "kglobalshortcutsrc", "--group", component,
+                        "--key", action, f"{value},{default},{name}"], check=True)
+        if live:
+            action_id = "[" + ", ".join(gv_str(s) for s in (component, action, component_name, name)) + "]"
+            gv_keys = "[" + ", ".join(f"([{c}, 0, 0, 0],)" for c in codes) + "]" if codes else "@a(ai) []"
+            subprocess.run(["gdbus", "call", "--session", "--dest", "org.kde.kglobalaccel",
+                            "--object-path", "/kglobalaccel", "--method",
+                            "org.kde.KGlobalAccel.setForeignShortcutKeys", action_id, gv_keys],
+                           check=True, stdout=subprocess.DEVNULL)
+        print(f"    {component} / {action}: {', '.join(keys) or '(none)'}")
+if not live:
+    print("    Plasma isn't running; shortcuts take effect at next login")
+PY
+{{ end -}}

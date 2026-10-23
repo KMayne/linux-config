@@ -1,0 +1,11 @@
+# KDE Plasma settings applied by .chezmoiscripts/run_onchange_after_80-plasma-shortcuts
+# (only on KDE machines). Edit, then `chezmoi apply`.
+
+plasma:
+  # Global shortcuts: component -> action -> keys. [] removes the shortcut.
+  # Component/action names are the [group] and key names in ~/.config/kglobalshortcutsrc.
+  # Only actions listed here are touched; everything else stays as set in System Settings.
+  shortcuts:
+    kwin:
+      Window Quick Tile Top: []                 # default Meta+Up, freed for maximise
+      Window Maximize: [Meta+Up, Meta+PgUp]
