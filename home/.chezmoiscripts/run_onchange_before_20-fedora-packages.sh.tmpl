@@ -13,6 +13,11 @@ pkgs=(
   {{ . | quote }}
 {{- end }}
 {{- end }}
+{{- if .kde }}
+{{- range .packages.fedora.dnf_kde }}
+  {{ . | quote }}
+{{- end }}
+{{- end }}
 )
 sudo dnf install -y "${pkgs[@]}"
 {{ end -}}

@@ -19,6 +19,13 @@ packages:
     # Only on x86_64: no arm64 RPMs from these vendors (matters for Asahi)
     dnf_x86_64:
       - google-chrome-stable
+    # Only on KDE: Qt/KF6 dev packages to build ror (run-or-raise, github.com/KMayne/ror)
+    dnf_kde:
+      - cmake
+      - qt6-qtbase-devel
+      - qt6-qtdeclarative-devel
+      - kf6-kirigami
+      - kf6-kdeclarative
     flatpak:
       - com.getpostman.Postman
       - com.spotify.Client
