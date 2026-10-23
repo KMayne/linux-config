@@ -1,5 +1,5 @@
-# KDE Plasma settings applied by .chezmoiscripts/run_onchange_after_80-plasma-shortcuts
-# (only on KDE machines). Edit, then `chezmoi apply`.
+# KDE Plasma settings applied by .chezmoiscripts/run_onchange_after_80-plasma (KDE machines only).
+# Edit, then `chezmoi apply`. To copy settings from another machine, run tools/kde-capture.py there.
 
 plasma:
   # Global shortcuts: component -> action -> keys. [] removes the shortcut.
@@ -9,3 +9,6 @@ plasma:
     kwin:
       Window Quick Tile Top: []                 # default Meta+Up, freed for maximise
       Window Maximize: [Meta+Up, Meta+PgUp]
+
+  # Other settings: file in ~/.config -> [group] -> key -> value. Nested groups are written "A][B".
+  config: {}
