@@ -16,7 +16,7 @@ if ! command -v ror >/dev/null; then
     # Fail so chezmoi retries this script on the next apply
     exit 1
   fi
-  mise exec -- cargo install --git ssh://git@github.com/KMayne/ror.git --branch ror-mvp --locked
+  mise exec -- cargo install --git ssh://git@github.com/KMayne/ror.git --branch main --locked
 fi
 
 ror apply
