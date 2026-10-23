@@ -1,12 +1,12 @@
 {{ if .kde -}}
 #!/bin/bash
-# Sets the global shortcuts listed in .chezmoidata/plasma.yaml. Reruns when that list changes.
-# Writes ~/.config/kglobalshortcutsrc (for the next login) and, if Plasma is running,
-# updates KWin's shortcut service over D-Bus so the change is live straight away.
+# Applies .chezmoidata/plasma.yaml. Reruns when it changes. Only the listed settings are touched.
+# - shortcuts: written to ~/.config/kglobalshortcutsrc and, if Plasma is running, set live over D-Bus
+# - config: written with kwriteconfig6 --notify, then KWin is told to reload
 set -euo pipefail
-echo "==> Setting KDE shortcuts"
+echo "==> Applying KDE settings"
 
-python3 - {{ .plasma.shortcuts | toJson | squote }} <<'PY'
+python3 - {{ .plasma | toJson | squote }} <<'PY'
 import json, subprocess, sys
 
 MODS = {"Meta": 0x10000000, "Ctrl": 0x04000000, "Alt": 0x08000000, "Shift": 0x02000000}
@@ -46,8 +46,8 @@ live = subprocess.run(
      "/kglobalaccel", "--method", "org.freedesktop.DBus.Peer.Ping"],
     capture_output=True).returncode == 0
 
-shortcuts = json.loads(sys.argv[1])
-for component, actions in shortcuts.items():
+plasma = json.loads(sys.argv[1])
+for component, actions in (plasma.get("shortcuts") or {}).items():
     component_name = read(component, "_k_friendly_name") or component
     # Clear shortcuts first so their keys are free for the actions that take them over
     for action, keys in sorted(actions.items(), key=lambda kv: bool(kv[1])):
@@ -65,7 +65,22 @@ for component, actions in shortcuts.items():
                             "org.kde.KGlobalAccel.setForeignShortcutKeys", action_id, gv_keys],
                            check=True, stdout=subprocess.DEVNULL)
         print(f"    {component} / {action}: {', '.join(keys) or '(none)'}")
-if not live:
-    print("    Plasma isn't running; shortcuts take effect at next login")
+
+# Plain settings: file -> group (nested groups written "A][B") -> key -> value
+for fname, groups in (plasma.get("config") or {}).items():
+    for group, entries in groups.items():
+        group_args = [a for g in group.split("][") for a in ("--group", g)]
+        for key, value in entries.items():
+            if isinstance(value, bool):
+                value = "true" if value else "false"
+            subprocess.run(["kwriteconfig6", "--notify", "--file", fname, *group_args,
+                            "--key", key, str(value)], check=True)
+            print(f"    {fname} [{group}] {key}={value}")
+
+if live:
+    subprocess.run(["gdbus", "call", "--session", "--dest", "org.kde.KWin", "--object-path",
+                    "/KWin", "--method", "org.kde.KWin.reconfigure"], stdout=subprocess.DEVNULL)
+else:
+    print("    Plasma isn't running; changes take effect at next login")
 PY
 {{ end -}}
