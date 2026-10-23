@@ -1,14 +1,100 @@
 # KDE Plasma settings applied by .chezmoiscripts/run_onchange_after_80-plasma (KDE machines only).
-# Edit, then `chezmoi apply`. To copy settings from another machine, run tools/kde-capture.py there.
+# Edit, then `chezmoi apply`. Only the settings listed here are touched.
+# To copy settings from another machine, run tools/kde-capture.py there.
 
 plasma:
+  # Global theme (System Settings > Colours & Themes > Global Theme), by machine type.
+  # Applied only when it differs from the current one.
+  lookAndFeel:
+    personal: org.fedoraproject.fedoradark.desktop
+    work: org.kde.breezedark.desktop
+
+  # Applied to every touchpad on the machine (KDE stores touchpad settings per device).
+  # Names are KWin's InputDevice properties: naturalScroll, tapToClick, scrollFactor, ...
+  touchpad:
+    naturalScroll: true
+
   # Global shortcuts: component -> action -> keys. [] removes the shortcut.
-  # Component/action names are the [group] and key names in ~/.config/kglobalshortcutsrc.
-  # Only actions listed here are touched; everything else stays as set in System Settings.
+  # Component/action names are the [group] and key names in ~/.config/kglobalshortcutsrc;
+  # app launchers are "services][<app>.desktop".
   shortcuts:
     kwin:
-      Window Quick Tile Top: []                 # default Meta+Up, freed for maximise
-      Window Maximize: [Meta+Up, Meta+PgUp]
+      Window Maximize: [Meta+Up]
+      Window Quick Tile Top: []               # default Meta+Up, freed for maximise
+      # Meta+ alternatives removed; Ctrl/Alt versions kept
+      Expose: [Ctrl+F9]
+      ExposeAll: [Launch (C), Ctrl+F10]
+      ExposeClass: [Ctrl+F7]
+      Switch to Desktop 1: [Ctrl+F1]
+      Switch to Desktop 2: [Ctrl+F2]
+      Switch to Desktop 3: [Ctrl+F3]
+      Switch to Desktop 4: [Ctrl+F4]
+      Walk Through Windows: [Alt+Tab]
+      Walk Through Windows (Reverse): [Alt+Shift+Tab]
+      Walk Through Windows of Current Application: [Alt+`]
+      Walk Through Windows of Current Application (Reverse): [Alt+~]
+      # Zoom effect is off (kwinrc below), so free its keys
+      MoveZoomDown: []
+      MoveZoomLeft: []
+      MoveZoomRight: []
+      MoveZoomUp: []
+    plasmashell:
+      next activity: [Meta+A]
+      previous activity: [Meta+Shift+A]
+    services][org.kde.spectacle.desktop:
+      RectangularRegionScreenShot: [Meta+Shift+S, Meta+Shift+Print]
+      _launch: [Print]
 
   # Other settings: file in ~/.config -> [group] -> key -> value. Nested groups are written "A][B".
-  config: {}
+  config:
+    kdeglobals:
+      General:
+        BrowserApplication: google-chrome.desktop
+        UseSystemBell: true
+    kwinrc:
+      Desktops:
+        Number: 1
+        Rows: 1
+      EdgeBarrier:
+        EdgeBarrier: 10
+      Effect-overview:
+        BorderActivate: 9                     # no hot corner for Overview
+      NightColor:
+        Active: true
+      Plugins:
+        zoomEnabled: false
+      Wayland:
+        EnablePrimarySelection: false         # no middle-click paste
+    kcminputrc:
+      Keyboard:
+        NumLock: 0                            # turn Num Lock on at login
+    konsolerc:
+      Desktop Entry:
+        DefaultProfile: Main.profile          # profiles: ~/.local/share/konsole
+      KonsoleWindow:
+        ShowWindowTitleOnTitleBar: true
+      MemorySettings:
+        MemoryLimitValue: 512
+      TabBar:
+        CloseTabOnMiddleMouseButton: true
+        NewTabBehavior: PutNewTabAfterCurrentTab
+      UiSettings:
+        ColorScheme: BreezeLight
+    dolphinrc:
+      DetailsMode:
+        PreviewSize: 64
+    spectaclerc:
+      General:
+        rememberSelectionRect: Never
+      GuiConfig:
+        captureMode: 0
+        quitAfterSaveCopyExport: true
+      Annotations:
+        annotationToolType: 7
+        freehandShadow: false
+        highlighterStrokeColor: 255,0,4
+        highlighterStrokeWidth: 3
+        rectangleFillColor: 0,0,0,0
+        rectangleShadow: false
+        rectangleStrokeColor: 255,0,0
+        textShadow: false

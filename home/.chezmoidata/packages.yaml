@@ -14,6 +14,7 @@ packages:
       - chezmoi
       - ShellCheck
       - gcc                # C linker for Rust crates
+      - fira-code-fonts    # Konsole profiles
       - mise
       - code
     # Only on x86_64: no arm64 RPMs from these vendors (matters for Asahi)

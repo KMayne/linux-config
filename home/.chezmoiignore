@@ -2,3 +2,6 @@
 .local/bin/git
 .config/zsh/omz-custom/osc-code.zsh
 {{ end }}
+{{ if not .kde }}
+.local/share/konsole
+{{ end }}

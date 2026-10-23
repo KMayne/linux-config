@@ -1,6 +1,8 @@
 {{- /* Worked out once at `chezmoi init`; rerun `chezmoi init` to re-detect. */ -}}
 {{- $wsl := contains "microsoft" (lower .chezmoi.kernel.osrelease) -}}
 {{- $kde := contains "KDE" (env "XDG_CURRENT_DESKTOP") -}}
+{{- /* Asked once at init; work machines get a few different settings (e.g. theme) */ -}}
+{{- $work := promptBoolOnce . "work" "Is this a work machine" false -}}
 {{- /* Normalise distro so Fedora spins/remixes (e.g. Asahi) count as fedora */ -}}
 {{- $id := .chezmoi.osRelease.id -}}
 {{- $like := get .chezmoi.osRelease "idLike" | default "" -}}
@@ -15,6 +17,7 @@ sourceDir = {{ .chezmoi.workingTree | quote }}
 [data]
     wsl = {{ $wsl }}
     kde = {{ $kde }}
+    work = {{ $work }}
     distro = {{ $distro | quote }}
 
 [edit]
