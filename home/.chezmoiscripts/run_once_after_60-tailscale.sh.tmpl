@@ -1,0 +1,25 @@
+{{ if eq .distro "fedora" -}}
+#!/bin/bash
+# Starts tailscaled, lets this user run `tailscale` without sudo, turns on the
+# tray icon and logs in. If login is cancelled, the next `chezmoi apply` asks again.
+set -euo pipefail
+echo "==> Enabling Tailscale"
+
+sudo systemctl enable --now tailscaled
+sudo tailscale set --operator="$USER"
+{{- if .kde }}
+
+# Tray icon (unit file is ~/.config/systemd/user/tailscale-systray.service)
+systemctl --user daemon-reload
+systemctl --user enable tailscale-systray.service
+if [[ -n "${WAYLAND_DISPLAY:-}${DISPLAY:-}" ]]; then
+  systemctl --user start tailscale-systray.service
+fi
+{{- end }}
+
+if ! tailscale status --json --peers=false 2>/dev/null | grep -q '"BackendState": "Running"'; then
+  echo "==> Log in to Tailscale: open the link below in a browser"
+  # --operator repeats the setting above; `tailscale up` refuses to run without it
+  tailscale up --operator="$USER"
+fi
+{{ end -}}

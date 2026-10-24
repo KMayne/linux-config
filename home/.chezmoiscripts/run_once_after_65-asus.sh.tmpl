@@ -1,0 +1,18 @@
+{{ if and (eq .distro "fedora") .asus -}}
+#!/bin/bash
+# Turns on asusd. asusctl works best with power-profiles-daemon, so swap out
+# Fedora's tuned-ppd (and stop tuned, which would fight it).
+set -euo pipefail
+echo "==> Setting up asusctl"
+
+if rpm -q tuned-ppd >/dev/null 2>&1; then
+  sudo dnf swap -y --allowerasing tuned-ppd power-profiles-daemon
+else
+  sudo dnf install -y power-profiles-daemon
+fi
+if systemctl list-unit-files tuned.service >/dev/null 2>&1; then
+  sudo systemctl disable --now tuned.service
+fi
+sudo systemctl enable --now power-profiles-daemon.service
+sudo systemctl enable --now asusd.service
+{{ end -}}

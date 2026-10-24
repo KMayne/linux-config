@@ -18,6 +18,17 @@ type=rpm-md
 gpgcheck=1
 gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 REPO
+
+sudo tee /etc/yum.repos.d/tailscale.repo >/dev/null <<'REPO'
+[tailscale-stable]
+name=Tailscale stable
+baseurl=https://pkgs.tailscale.com/stable/fedora/$basearch
+enabled=1
+type=rpm
+repo_gpgcheck=1
+gpgcheck=1
+gpgkey=https://pkgs.tailscale.com/stable/fedora/repo.gpg
+REPO
 {{- if eq .chezmoi.arch "amd64" }}
 
 sudo tee /etc/yum.repos.d/google-chrome.repo >/dev/null <<'REPO'
@@ -28,6 +39,12 @@ enabled=1
 gpgcheck=1
 gpgkey=https://dl.google.com/linux/linux_signing_key.pub
 REPO
+{{- end }}
+
+{{- if .asus }}
+
+# Terra hosts the asus-linux packages; terra-release brings its GPG key
+sudo dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
 {{- end }}
 
 {{- if .kde }}
