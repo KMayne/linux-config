@@ -1,0 +1,19 @@
+#!/bin/bash
+# bootstrap.sh clones over HTTPS because a fresh machine has no SSH key.
+# Once SSH to GitHub works (e.g. after `gh auth login` uploads a key), switch
+# origin to SSH. Runs on every apply but does nothing once origin is SSH.
+set -euo pipefail
+
+repo={{ .chezmoi.workingTree | quote }}
+url="$(git -C "$repo" remote get-url origin 2>/dev/null || true)"
+[[ "$url" == https://github.com/* ]] || exit 0
+
+# GitHub answers a working key with "successfully authenticated" (and exit code 1).
+# accept-new trusts github.com's host key on first contact, like answering "yes".
+out="$(ssh -T -o BatchMode=yes -o ConnectTimeout=5 -o StrictHostKeyChecking=accept-new \
+  git@github.com 2>&1 || true)"
+if [[ "$out" == *"successfully authenticated"* ]]; then
+  ssh_url="git@github.com:${url#https://github.com/}"
+  echo "==> SSH to GitHub works; switching origin to $ssh_url"
+  git -C "$repo" remote set-url origin "$ssh_url"
+fi

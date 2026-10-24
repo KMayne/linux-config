@@ -1,6 +1,11 @@
 {{- /* Worked out once at `chezmoi init`; rerun `chezmoi init` to re-detect. */ -}}
 {{- $wsl := contains "microsoft" (lower .chezmoi.kernel.osrelease) -}}
 {{- $kde := contains "KDE" (env "XDG_CURRENT_DESKTOP") -}}
+{{- /* ASUS laptops (e.g. ROG Zephyrus G14) get asusctl for power and GPU control */ -}}
+{{- $asus := false -}}
+{{- if stat "/sys/class/dmi/id/sys_vendor" -}}
+{{-   $asus = contains "ASUSTeK" (output "cat" "/sys/class/dmi/id/sys_vendor") -}}
+{{- end -}}
 {{- /* Asked once at init; work machines get a few different settings (e.g. theme) */ -}}
 {{- $work := promptBoolOnce . "work" "Is this a work machine" false -}}
 {{- /* Normalise distro so Fedora spins/remixes (e.g. Asahi) count as fedora */ -}}
@@ -17,6 +22,7 @@ sourceDir = {{ .chezmoi.workingTree | quote }}
 [data]
     wsl = {{ $wsl }}
     kde = {{ $kde }}
+    asus = {{ $asus }}
     work = {{ $work }}
     distro = {{ $distro | quote }}
 

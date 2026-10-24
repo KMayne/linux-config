@@ -3,11 +3,12 @@
 #
 #   bash <(curl -fsSL https://raw.githubusercontent.com/KMayne/linux-config/main/bootstrap.sh)
 #
-# Installs chezmoi, clones this repo to ~/.local/share/chezmoi, then installs packages,
+# Installs chezmoi, clones this repo to ~/Repos/config, then installs packages,
 # toolchains and dotfiles. Safe to rerun.
 set -euo pipefail
 
 REPO="https://github.com/KMayne/linux-config.git"
+SRC="$HOME/Repos/config"
 # Set BRANCH to try another branch; any arguments are passed to `chezmoi init`
 BRANCH="${BRANCH:-main}"
 export PATH="$HOME/.local/bin:$PATH"
@@ -28,7 +29,12 @@ fi
 if chezmoi source-path >/dev/null 2>&1 && [[ -d "$(chezmoi source-path)" ]]; then
   chezmoi update
 else
-  chezmoi init --apply --branch "$BRANCH" "$@" "$REPO"
+  if [[ ! -d "$SRC/.git" ]]; then
+    echo "==> Cloning $REPO to $SRC"
+    # HTTPS needs no SSH key; run_after_90-ssh-origin switches to SSH once one works
+    git clone --branch "$BRANCH" "$REPO" "$SRC"
+  fi
+  chezmoi init --apply --source "$SRC" "$@"
 fi
 
 echo

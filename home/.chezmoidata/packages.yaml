@@ -3,7 +3,7 @@
 
 packages:
   fedora:
-    # VS Code and Chrome repos are added in .chezmoiscripts/run_onchange_before_10-fedora-repos
+    # VS Code, Chrome and Tailscale repos are added in .chezmoiscripts/run_onchange_before_10-fedora-repos
     copr:
       - jdxcode/mise
     dnf:
@@ -17,16 +17,26 @@ packages:
       - fira-code-fonts    # Konsole profiles
       - mise
       - code
+      - podman-compose     # pulls in podman
+      - tailscale          # service started by run_once_after_60-tailscale
     # Only on x86_64: no arm64 RPMs from these vendors (matters for Asahi)
     dnf_x86_64:
       - google-chrome-stable
-    # Only on KDE: Qt/KF6 dev packages to build ror (run-or-raise, github.com/KMayne/ror)
+    # Only on KDE
     dnf_kde:
+      - ksshaskpass        # SSH passphrase prompt, saved in KWallet
+      - pam-kwallet        # unlocks KWallet with the login password
+      # Qt/KF6 dev packages to build ror (run-or-raise, github.com/KMayne/ror)
       - cmake
       - qt6-qtbase-devel
       - qt6-qtdeclarative-devel
       - kf6-kirigami
       - kf6-kdeclarative
+    # Only on ASUS laptops, from the Terra repo (asus-linux.org/guides/fedora-guide).
+    # GPU switching is in asusctl now; supergfxctl is deprecated.
+    dnf_asus:
+      - asusctl            # power profiles, fans, charge limit, dGPU on/off
+      - asusctl-rog-gui    # ROG Control Center
     flatpak:
       - com.getpostman.Postman
       - com.spotify.Client

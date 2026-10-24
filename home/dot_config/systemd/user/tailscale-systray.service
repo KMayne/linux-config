@@ -1,0 +1,16 @@
+# Tailscale tray icon. Based on the unit `tailscale configure systray` writes,
+# but tied to the desktop session so it starts once the tray exists.
+[Unit]
+Description=Tailscale System Tray
+Documentation=https://tailscale.com/kb/1597/linux-systray
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/tailscale systray
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target

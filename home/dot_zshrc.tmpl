@@ -72,6 +72,11 @@ source $ZSH_CUSTOM/zsh_aliases
 
 # Set Vim as the editor
 export EDITOR=vim
+# GUI editing (e.g. Claude Code's Ctrl+G) opens VS Code; --wait blocks until the tab closes.
+# Skipped over SSH, where there's no window to open.
+if (( $+commands[code] )) && [[ -z $SSH_CONNECTION ]]; then
+  export VISUAL="code --wait"
+fi
 
 # Set up node as development
 export NODE_ENV=development

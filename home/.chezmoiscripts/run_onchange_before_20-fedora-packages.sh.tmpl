@@ -18,6 +18,11 @@ pkgs=(
   {{ . | quote }}
 {{- end }}
 {{- end }}
+{{- if .asus }}
+{{- range .packages.fedora.dnf_asus }}
+  {{ . | quote }}
+{{- end }}
+{{- end }}
 )
 sudo dnf install -y "${pkgs[@]}"
 {{ end -}}

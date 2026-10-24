@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Unlock SSH keys
+Comment=Adds ~/.ssh keys to ssh-agent at login. ksshaskpass asks for the passphrase once; tick "Remember password" and it's kept in KWallet, which unlocks with your login password.
+Exec=env SSH_ASKPASS=/usr/bin/ksshaskpass SSH_ASKPASS_REQUIRE=prefer /usr/bin/ssh-add -q
+X-KDE-StartupNotify=false
+OnlyShowIn=KDE;
+NoDisplay=true

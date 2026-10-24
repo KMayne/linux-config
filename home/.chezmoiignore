@@ -5,4 +5,8 @@
 {{ if not .kde }}
 .local/share/konsole
 .config/ror
+.config/autostart/ssh-add.desktop
+{{ end }}
+{{ if not (and .kde (eq .distro "fedora")) }}
+.config/systemd/user/tailscale-systray.service
 {{ end }}
