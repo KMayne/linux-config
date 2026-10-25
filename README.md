@@ -1,6 +1,6 @@
 # linux-config
 
-Dotfiles and machine setup, managed with [chezmoi](https://www.chezmoi.io). Works on Fedora (including KDE and Asahi) and Ubuntu/WSL.
+Dotfiles and machine setup, managed with [chezmoi](https://www.chezmoi.io). Works on Fedora (including KDE and Asahi), Ubuntu/WSL and Debian (including Raspberry Pi OS).
 
 ## New machine
 
@@ -11,7 +11,8 @@ Dotfiles and machine setup, managed with [chezmoi](https://www.chezmoi.io). Work
    bash <(curl -fsSL https://raw.githubusercontent.com/KMayne/linux-config/main/bootstrap.sh)
    ```
 
-3. On Fedora, setup pauses at a Tailscale login link: open it in a browser to join the tailnet.
+3. Setup pauses at a Tailscale login link (not on WSL): open it in a browser to join the tailnet.
+   Over SSH, open the link on any device.
 4. Log out and back in if your login shell changed to zsh.
 5. Run `gh auth login` (pick SSH and let it upload a key), then `chezmoi apply`. Once SSH to
    GitHub works, `chezmoi apply` switches the repo's `origin` from HTTPS to SSH.
@@ -44,4 +45,4 @@ Install scripts only rerun when their package list changes, so `chezmoi apply` i
 
 ## Per-machine differences
 
-`chezmoi init` detects `wsl`, `kde`, `asus` and `distro` and stores them in `~/.config/chezmoi/chezmoi.toml`; templates branch on them (replacing the old `wsl` branch). Machine-only shell config goes in `~/.zsh_custom` and git config in `~/.gitconfig-local`; neither is managed.
+`chezmoi init` detects `wsl`, `kde`, `asus` and `distro`, asks for `work` and `minimal`, and stores them in `~/.config/chezmoi/chezmoi.toml`; templates branch on them (replacing the old `wsl` branch). Say yes to `minimal` on small machines such as a Raspberry Pi: it skips the mise toolchains and wakatime. Machine-only shell config goes in `~/.zsh_custom` and git config in `~/.gitconfig-local`; neither is managed.

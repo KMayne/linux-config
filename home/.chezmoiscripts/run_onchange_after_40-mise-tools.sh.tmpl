@@ -1,5 +1,7 @@
+{{ if not (get . "minimal") -}}
 #!/bin/bash
 # Installs the toolchains in ~/.config/mise/config.toml. Reruns when that file changes.
+{{- /* Skipped on minimal machines */}}
 # config hash: {{ include "dot_config/mise/config.toml" | sha256sum }}
 set -euo pipefail
 echo "==> Installing mise toolchains"
@@ -11,3 +13,4 @@ if ! command -v mise >/dev/null; then
 fi
 
 mise install --yes
+{{ end -}}

@@ -10,3 +10,7 @@
 {{ if not (and .kde (eq .distro "fedora")) }}
 .config/systemd/user/tailscale-systray.service
 {{ end }}
+{{ if get . "minimal" }}
+# No wakatime-cli on minimal machines, so no plugin either
+.config/zsh/omz-custom/plugins/wakatime
+{{ end }}

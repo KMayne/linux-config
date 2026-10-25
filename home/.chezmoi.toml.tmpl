@@ -8,12 +8,16 @@
 {{- end -}}
 {{- /* Asked once at init; work machines get a few different settings (e.g. theme) */ -}}
 {{- $work := promptBoolOnce . "work" "Is this a work machine" false -}}
+{{- /* Asked once at init; minimal machines (e.g. a Raspberry Pi) skip dev toolchains and wakatime */ -}}
+{{- $minimal := promptBoolOnce . "minimal" "Minimal setup, without dev toolchains or wakatime" false -}}
 {{- /* Normalise distro so Fedora spins/remixes (e.g. Asahi) count as fedora */ -}}
 {{- $id := .chezmoi.osRelease.id -}}
 {{- $like := get .chezmoi.osRelease "idLike" | default "" -}}
 {{- $distro := $id -}}
 {{- if or (eq $id "fedora") (contains "fedora" $like) -}}{{ $distro = "fedora" }}{{- end -}}
 {{- if or (eq $id "ubuntu") (contains "ubuntu" $like) -}}{{ $distro = "ubuntu" }}{{- end -}}
+{{- /* Raspberry Pi OS reports "debian" (64-bit) or "raspbian" (32-bit) */ -}}
+{{- if or (eq $id "debian") (eq $id "raspbian") -}}{{ $distro = "debian" }}{{- end -}}
 
 # Remember where the repo lives (the .chezmoiroot parent), so a clone outside
 # ~/.local/share/chezmoi keeps working after `chezmoi init --source <repo>`
@@ -24,6 +28,7 @@ sourceDir = {{ .chezmoi.workingTree | quote }}
     kde = {{ $kde }}
     asus = {{ $asus }}
     work = {{ $work }}
+    minimal = {{ $minimal }}
     distro = {{ $distro | quote }}
 
 [edit]
