@@ -1,4 +1,5 @@
-{{ if eq .distro "ubuntu" -}}
+{{- /* Ubuntu, Debian and Raspberry Pi OS share the one apt list */ -}}
+{{ if or (eq .distro "ubuntu") (eq .distro "debian") -}}
 #!/bin/bash
 # Installs apt packages from .chezmoidata/packages.yaml. Reruns when that list changes.
 set -euo pipefail

@@ -44,9 +44,9 @@ ZSH_CUSTOM=~/.config/zsh/omz-custom
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 {{ if .wsl -}}
-plugins=(git ssh-agent kubectl pj colored-man-pages command-not-found wakatime history zsh-syntax-highlighting)
+plugins=(git ssh-agent kubectl pj colored-man-pages command-not-found{{ if not (get . "minimal") }} wakatime{{ end }} history zsh-syntax-highlighting)
 {{- else -}}
-plugins=(git kubectl pj colored-man-pages command-not-found wakatime history zsh-prompt-benchmark zsh-syntax-highlighting)
+plugins=(git kubectl pj colored-man-pages command-not-found{{ if not (get . "minimal") }} wakatime{{ end }} history zsh-prompt-benchmark zsh-syntax-highlighting)
 {{- end }}
 
 PROJECT_PATHS=(~/Repos)

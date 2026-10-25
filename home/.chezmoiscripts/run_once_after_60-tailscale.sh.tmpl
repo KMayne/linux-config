@@ -1,8 +1,25 @@
-{{ if eq .distro "fedora" -}}
+{{- /* Not on WSL: there the Windows Tailscale app covers it */ -}}
+{{- $apt := and (or (eq .distro "ubuntu") (eq .distro "debian")) (not .wsl) -}}
+{{ if or (eq .distro "fedora") $apt -}}
 #!/bin/bash
 # Starts tailscaled, lets this user run `tailscale` without sudo, turns on the
 # tray icon and logs in. If login is cancelled, the next `chezmoi apply` asks again.
 set -euo pipefail
+{{- if $apt }}
+
+# Fedora gets the package from run_onchange_before_10-fedora-repos; apt machines
+# use Tailscale's own repo (pkgs.tailscale.com/stable/#debian-bookworm and friends)
+if ! command -v tailscale >/dev/null; then
+  echo "==> Installing Tailscale"
+  . /etc/os-release
+  repo="https://pkgs.tailscale.com/stable/${ID}/${VERSION_CODENAME}"
+  sudo install -d -m 0755 /usr/share/keyrings
+  curl -fsSL "$repo.noarmor.gpg" | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+  curl -fsSL "$repo.tailscale-keyring.list" | sudo tee /etc/apt/sources.list.d/tailscale.list >/dev/null
+  sudo apt-get update
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y tailscale
+fi
+{{- end }}
 echo "==> Enabling Tailscale"
 
 sudo systemctl enable --now tailscaled
