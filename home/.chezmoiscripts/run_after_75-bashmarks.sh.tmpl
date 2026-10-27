@@ -1,0 +1,26 @@
+#!/bin/bash
+# Prefills bashmarks (~/.sdirs) from .chezmoidata/bashmarks.yaml. Runs on every
+# apply, so a bookmark appears once its folder does (e.g. after cloning a repo).
+# Each name is handled once, then remembered in ~/.local/state/bashmarks-prefilled,
+# so `dm` and your own `sm` changes stick.
+set -euo pipefail
+
+sdirs="$HOME/.sdirs"
+done_file="$HOME/.local/state/bashmarks-prefilled"
+mkdir -p "$(dirname "$done_file")"
+touch "$sdirs" "$done_file"
+
+add() {
+  local name=$1 dir=$2
+  grep -qxF "$name" "$done_file" && return 0
+  [[ -d "$HOME/$dir" ]] || return 0
+  if ! grep -q "^export DIR_$name=" "$sdirs"; then
+    echo "export DIR_$name=\"\$HOME/$dir\"" >> "$sdirs"
+    echo "==> Added bashmark $name -> ~/$dir"
+  fi
+  echo "$name" >> "$done_file"
+}
+
+{{ range $name, $dir := .bashmarks -}}
+add {{ $name | quote }} {{ $dir | quote }}
+{{ end -}}

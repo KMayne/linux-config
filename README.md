@@ -26,6 +26,7 @@ The repo is cloned to `~/Repos/config`. To keep it somewhere else, clone it ther
 | --- | --- |
 | Change a dotfile | `chezmoi edit ~/.zshrc` (applies on save), or the `virc` / `vialias` aliases |
 | Add a package | Edit `home/.chezmoidata/packages.yaml`, then `chezmoi apply` |
+| Suggest a bashmark for every machine | Add it to `home/.chezmoidata/bashmarks.yaml`; `chezmoi apply` adds it wherever the folder exists |
 | Add a toolchain | `mise use -g go@latest`, then `chezmoi re-add ~/.config/mise/config.toml` |
 | Update Headlamp | Bump `headlamp` in `home/.chezmoidata/packages.yaml`, then `chezmoi apply` |
 | Pull changes from another machine | `chezmoi update` |
