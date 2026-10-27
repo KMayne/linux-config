@@ -2,8 +2,8 @@
 #!/bin/bash
 # ror: run-or-raise shortcuts for KDE (github.com/KMayne/ror, private).
 # Installs it with cargo if missing, then applies ~/.config/ror/config.json (a symlink to
-# linked/ror/config.json in this repo) to KWin. Reruns when that config changes.
-# config hash: {{ joinPath .chezmoi.workingTree "linked/ror/config.json" | include | sha256sum }}
+# linked/ror/config.json, or config.work.json on work machines) to KWin. Reruns when that config changes.
+# config hash: {{ joinPath .chezmoi.workingTree (printf "linked/ror/config%s.json" (ternary ".work" "" .work)) | include | sha256sum }}
 set -euo pipefail
 echo "==> Setting up ror"
 
