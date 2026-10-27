@@ -19,10 +19,15 @@ if ! command -v ror >/dev/null; then
   mise exec -- cargo install --git ssh://git@github.com/KMayne/ror.git --branch main --locked
 fi
 
-ror apply
-
-# The daemon (tray icon, settings window) sets up its own autostart on first run
+# `ror apply` talks to the daemon over D-Bus, so start it first and wait for it.
+# The daemon (tray icon, settings window) sets up its own autostart on first run.
 if [[ -n "${WAYLAND_DISPLAY:-}" ]] && ! pgrep -u "$USER" -f 'ror daemon' >/dev/null; then
   setsid -f ror daemon >/dev/null 2>&1
+  for _ in {1..20}; do
+    busctl --user status uk.co.kianmayne.Ror >/dev/null 2>&1 && break
+    sleep 0.5
+  done
 fi
+
+ror apply
 {{ end -}}
