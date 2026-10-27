@@ -2,6 +2,11 @@
 # scripts whose list changed rerun.
 
 packages:
+  # Headlamp (Kubernetes UI) is an AppImage from its GitHub release, installed by
+  # run_onchange_after_35-headlamp. Bump this to update. Not the Flathub build: its aws
+  # wrapper drops AWS_PROFILE, so EKS auth fails.
+  headlamp: "0.46.0"
+
   fedora:
     # VS Code, Chrome and Tailscale repos are added in .chezmoiscripts/run_onchange_before_10-fedora-repos
     copr:
@@ -40,7 +45,6 @@ packages:
     flatpak:
       - com.getpostman.Postman
       - com.spotify.Client
-      - io.kinvolk.Headlamp   # Kubernetes UI
 
   ubuntu:
     apt:
