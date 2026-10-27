@@ -36,4 +36,4 @@ Install scripts only rerun when their package list changes, so `chezmoi apply` i
 
 ## Per-machine differences
 
-`chezmoi init` detects `wsl`, `kde`, `asus` and `distro`, asks for `work` and `minimal`, and stores them in `~/.config/chezmoi/chezmoi.toml`; templates branch on them (replacing the old `wsl` branch). Say yes to `minimal` on small machines such as a Raspberry Pi: it skips the mise toolchains and wakatime. Machine-only shell config goes in `~/.zsh_custom` and git config in `~/.gitconfig-local`; neither is managed.
+`chezmoi init` detects `wsl`, `kde`, `asus` and `distro`, asks for `work` and `minimal`, and stores them in `~/.config/chezmoi/chezmoi.toml`; templates branch on them (replacing the old `wsl` branch). Say yes to `minimal` on small machines such as a Raspberry Pi: it skips the mise toolchains, wakatime and Claude Code. Machine-only shell config goes in `~/.zsh_custom` and git config in `~/.gitconfig-local`; neither is managed.
