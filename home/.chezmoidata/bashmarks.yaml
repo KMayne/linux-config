@@ -1,0 +1,9 @@
+# Suggested bashmarks (name: folder under ~). `chezmoi apply` adds each one to
+# ~/.sdirs once its folder exists on that machine and the name isn't taken.
+# Bookmarks you remove with `dm` stay removed. See run_after_75-bashmarks.
+bashmarks:
+  downs: Downloads
+  r: Repos
+  config: Repos/config
+  hs2: Repos/hs2
+  hs: Repos/hestie
