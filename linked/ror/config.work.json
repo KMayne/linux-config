@@ -1,0 +1,111 @@
+{
+  "$schema": "https://raw.githubusercontent.com/KMayne/ror/main/schema/ror.schema.json",
+  "apps": [
+    {
+      "id": "67e8356e-431d-4f54-8752-ae16b4a3a26b",
+      "name": "Blink",
+      "raise": "Meta+\"",
+      "match": {
+        "class": "chrome-nbjihfimkbmgnfhjgpinlonjmecnigia-Default"
+      },
+      "launch": [
+        "/opt/google/chrome/google-chrome",
+        "--profile-directory=Default",
+        "--app-id=nbjihfimkbmgnfhjgpinlonjmecnigia"
+      ]
+    },
+    {
+      "id": "7b7cc0c5-c36e-40c5-b13f-c9e56087dee1",
+      "name": "Chrome",
+      "raise": "Meta+Shift+C",
+      "match": {
+        "class": "google-chrome"
+      },
+      "launch": [
+        "/usr/bin/google-chrome-stable"
+      ]
+    },
+    {
+      "id": "3e19baf8-8a97-47a1-88d6-e7ae87be0f3a",
+      "name": "Code",
+      "raise": "Meta+Shift+E",
+      "match": {
+        "class": "com.microsoft.VSCode"
+      },
+      "launch": [
+        "/usr/share/code/code"
+      ]
+    },
+    {
+      "id": "9072cf72-4ac1-4ab2-8a6a-0985b5e09ef4",
+      "name": "Datagrip",
+      "raise": "Meta+Shift+G",
+      "match": {
+        "class": "jetbrains-datagrip"
+      },
+      "launch": [
+        "/home/kian/.local/share/JetBrains/Toolbox/apps/datagrip/bin/datagrip"
+      ]
+    },
+    {
+      "id": "fa855ec9-8bc0-46f1-bcd9-c90e6f2a995c",
+      "name": "Firefox",
+      "raise": "Meta+Shift+F",
+      "match": {
+        "class": "org.mozilla.firefox"
+      },
+      "launch": [
+        "/usr/bin/firefox"
+      ]
+    },
+    {
+      "id": "741ee75c-701c-42a0-8992-921544cffb29",
+      "name": "Headlamp",
+      "raise": "Meta+Shift+L",
+      "match": {
+        "class": "Headlamp"
+      },
+      "launch": [
+        "/home/kian/.local/bin/headlamp.AppImage"
+      ]
+    },
+    {
+      "id": "67a5f4c8-a2e6-406a-b92c-3d5456714ca9",
+      "name": "IntelliJ",
+      "raise": "Meta+Shift+D",
+      "match": {
+        "class": "jetbrains-idea"
+      },
+      "launch": [
+        "/home/kian/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea"
+      ]
+    },
+    {
+      "id": "cb60d2b7-8cd8-4798-adbb-225b4ba0621d",
+      "name": "Postman",
+      "raise": "Meta+Shift+P",
+      "match": {
+        "class": "Postman"
+      },
+      "launch_desktop": "com.getpostman.Postman.desktop"
+    },
+    {
+      "id": "df94457f-ed54-4c2d-af76-9ec9264d7725",
+      "name": "Spotify",
+      "raise": "Ctrl+Alt+Shift+M",
+      "match": {
+        "class": "Spotify"
+      },
+      "launch_desktop": "com.spotify.Client.desktop"
+    },
+    {
+      "id": "331cfa76-b6ef-4127-884a-3bef6c7deba4",
+      "name": "Terminal",
+      "raise": "Meta+Shift+X",
+      "match": {
+        "class": "org.kde.konsole"
+      },
+      "launch_desktop": "org.kde.konsole.desktop"
+    }
+  ]
+}
