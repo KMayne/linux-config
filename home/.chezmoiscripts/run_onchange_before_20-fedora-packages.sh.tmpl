@@ -25,4 +25,11 @@ pkgs=(
 {{- end }}
 )
 sudo dnf install -y "${pkgs[@]}"
+{{- if eq .chezmoi.arch "amd64" }}
+
+# Offer the Bitwarden extension in Chrome; it asks to enable it on next launch
+sudo install -d /usr/share/google-chrome/extensions
+echo '{"external_update_url": "https://clients2.google.com/service/update2/crx"}' |
+  sudo tee /usr/share/google-chrome/extensions/nngceckbapebfimnlniiiahkandclblb.json >/dev/null
+{{- end }}
 {{ end -}}
