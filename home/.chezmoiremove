@@ -1,2 +1,4 @@
 # Targets chezmoi deletes if present (replaced or no longer used)
 .local/bin/run-or-raise
+# Launcher copied from the Headlamp Flatpak; headlamp.desktop launches the AppImage now
+.local/share/applications/io.kinvolk.Headlamp.desktop

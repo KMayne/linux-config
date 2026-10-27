@@ -6,6 +6,7 @@
 .local/share/konsole
 .config/ror
 .config/autostart/ssh-add.desktop
+.local/share/applications/headlamp.desktop
 {{ end }}
 {{ if not (and .kde (eq .distro "fedora")) }}
 .config/systemd/user/tailscale-systray.service

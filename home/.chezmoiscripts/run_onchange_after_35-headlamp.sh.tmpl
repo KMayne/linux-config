@@ -1,0 +1,38 @@
+{{ if .kde -}}
+#!/bin/bash
+# Installs Headlamp (Kubernetes UI) as an AppImage from its GitHub release, verified against
+# the release checksums. Reruns when the pinned version in .chezmoidata/packages.yaml changes,
+# so updating is: bump `headlamp` there, then `chezmoi apply`.
+# Why not the Flathub build: its aws wrapper drops AWS_PROFILE, so EKS auth fails.
+set -euo pipefail
+
+version={{ .packages.headlamp | quote }}
+arch={{ if eq .chezmoi.arch "amd64" }}x64{{ else }}{{ .chezmoi.arch | quote }}{{ end }}
+dest="$HOME/.local/bin/headlamp.AppImage"
+icon="$HOME/.local/share/icons/headlamp.png"   # referenced by .local/share/applications/headlamp.desktop
+
+if [[ -x "$dest" && -f "$dest.version" && "$(<"$dest.version")" == "$version" ]]; then
+  echo "==> Headlamp $version already installed"
+  exit 0
+fi
+echo "==> Installing Headlamp $version"
+
+asset="Headlamp-$version-linux-$arch.AppImage"
+base="https://github.com/kubernetes-sigs/headlamp/releases/download/v$version"
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+curl -fsSL --retry 3 -o "$tmp/$asset" "$base/$asset"
+curl -fsSL --retry 3 -o "$tmp/checksums.txt" "$base/checksums.txt"
+(cd "$tmp" && grep -F " $asset" checksums.txt | sha256sum -c --quiet -)
+
+chmod +x "$tmp/$asset"
+# The AppImage's top-level headlamp.png is a symlink into the icon theme tree, so take the largest real file
+(cd "$tmp" && "./$asset" --appimage-extract 'usr/share/icons/hicolor/*/apps/headlamp.png' >/dev/null)
+src_icon=$(find "$tmp/squashfs-root" -type f -name headlamp.png | sort -V | tail -1)
+[[ -n "$src_icon" ]]
+mkdir -p "$(dirname "$dest")" "$(dirname "$icon")"
+mv "$src_icon" "$icon"
+mv "$tmp/$asset" "$dest"
+echo "$version" >"$dest.version"
+{{ end -}}
