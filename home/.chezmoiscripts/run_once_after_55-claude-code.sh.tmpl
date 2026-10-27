@@ -1,0 +1,12 @@
+{{ if not (get . "minimal") -}}
+#!/bin/bash
+# Claude Code, using Anthropic's native installer (~/.local/bin/claude). It updates itself.
+{{- /* Skipped on minimal machines */}}
+set -euo pipefail
+
+export PATH="$HOME/.local/bin:$PATH"
+if ! command -v claude >/dev/null; then
+  echo "==> Installing Claude Code"
+  curl -fsSL https://claude.ai/install.sh | bash
+fi
+{{ end -}}
