@@ -28,22 +28,11 @@ The repo is cloned to `~/Repos/config`. To keep it somewhere else, clone it ther
 | Add a package | Edit `home/.chezmoidata/packages.yaml`, then `chezmoi apply` |
 | Suggest a bashmark for every machine | Add it to `home/.chezmoidata/bashmarks.yaml`; `chezmoi apply` adds it wherever the folder exists |
 | Add a toolchain | `mise use -g go@latest`, then `chezmoi re-add ~/.config/mise/config.toml` |
-| Update Headlamp | Bump `headlamp` in `home/.chezmoidata/packages.yaml`, then `chezmoi apply` |
 | Pull changes from another machine | `chezmoi update` |
 | See what would change | `chezmoi diff` |
 | Commit and push | `chezmoi cd`, then git as normal |
 
 Install scripts only rerun when their package list changes, so `chezmoi apply` is cheap.
-
-## Layout
-
-- `bootstrap.sh`: installs chezmoi and applies this repo.
-- `home/`: the chezmoi source (`.chezmoiroot` points here). `dot_zshrc.tmpl` becomes `~/.zshrc`, and so on.
-- `home/.chezmoidata/packages.yaml`: dnf, COPR and Flatpak package lists. ASUS laptops also get
-  asusctl and ROG Control Center (power profiles, fans, charge limit, dGPU on/off) from the Terra repo.
-- `home/.chezmoiscripts/`: install scripts (repos, dnf packages, Flatpaks, mise toolchains, Headlamp AppImage, wakatime-cli, Tailscale, asusctl, login shell).
-- `home/.chezmoiexternal.toml`: Oh My Zsh, zsh plugins and vim plugins, refreshed weekly.
-- `home/dot_config/mise/config.toml`: language toolchains (node, go, rust, kubectl).
 
 ## Per-machine differences
 
