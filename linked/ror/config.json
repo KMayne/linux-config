@@ -2,6 +2,19 @@
   "$schema": "https://raw.githubusercontent.com/KMayne/ror/main/schema/ror.schema.json",
   "apps": [
     {
+      "id": "67e8356e-431d-4f54-8752-ae16b4a3a26b",
+      "name": "Blink",
+      "raise": "Meta+\"",
+      "match": {
+        "class": "chrome-nbjihfimkbmgnfhjgpinlonjmecnigia-Default"
+      },
+      "launch": [
+        "/opt/google/chrome/google-chrome",
+        "--profile-directory=Default",
+        "--app-id=nbjihfimkbmgnfhjgpinlonjmecnigia"
+      ]
+    },
+    {
       "id": "7b7cc0c5-c36e-40c5-b13f-c9e56087dee1",
       "name": "Chrome",
       "raise": "Meta+Shift+C",
@@ -24,6 +37,17 @@
       ]
     },
     {
+      "id": "9072cf72-4ac1-4ab2-8a6a-0985b5e09ef4",
+      "name": "Datagrip",
+      "raise": "Meta+Shift+G",
+      "match": {
+        "class": "jetbrains-datagrip"
+      },
+      "launch": [
+        "/home/kian/.local/share/JetBrains/Toolbox/apps/datagrip/bin/datagrip"
+      ]
+    },
+    {
       "id": "fa855ec9-8bc0-46f1-bcd9-c90e6f2a995c",
       "name": "Firefox",
       "raise": "Meta+Shift+F",
@@ -39,16 +63,22 @@
       "name": "Headlamp",
       "raise": "Meta+Shift+L",
       "match": {
-        "any": [
-          {
-            "class": "Headlamp"
-          },
-          {
-            "desktop_file": "io.kinvolk.Headlamp"
-          }
-        ]
+        "class": "Headlamp"
       },
-      "launch_desktop": "io.kinvolk.Headlamp.desktop"
+      "launch": [
+        "/home/kian/.local/bin/headlamp.AppImage"
+      ]
+    },
+    {
+      "id": "67a5f4c8-a2e6-406a-b92c-3d5456714ca9",
+      "name": "IntelliJ",
+      "raise": "Meta+Shift+D",
+      "match": {
+        "class": "jetbrains-idea"
+      },
+      "launch": [
+        "/home/kian/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea"
+      ]
     },
     {
       "id": "cb60d2b7-8cd8-4798-adbb-225b4ba0621d",
