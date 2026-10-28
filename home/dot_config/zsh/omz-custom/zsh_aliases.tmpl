@@ -24,6 +24,7 @@ function gdn () {
   git diff "$@" ':(exclude,top,glob)**/package-lock.json' ':(exclude,top,glob)**/pnpm-lock.yaml'
 }
 alias gdnca='gdn --cached'
+alias gdv='git diff-viewer'
 alias gcub='git_current_branch'
 alias grc='gh repo clone'
 function gbclean () {
