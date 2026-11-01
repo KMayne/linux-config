@@ -8,6 +8,11 @@ apps=(
 {{- range .packages.fedora.flatpak }}
   {{ . | quote }}
 {{- end }}
+{{- if not (get . "minimal") }}
+{{- range .packages.fedora.flatpak_not_minimal }}
+  {{ . | quote }}
+{{- end }}
+{{- end }}
 )
 sudo flatpak install -y --noninteractive flathub "${apps[@]}"
 {{ end -}}
