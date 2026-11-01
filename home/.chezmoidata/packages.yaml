@@ -8,7 +8,7 @@ packages:
   headlamp: "0.46.0"
 
   fedora:
-    # VS Code, Chrome and Tailscale repos are added in .chezmoiscripts/run_onchange_before_10-fedora-repos
+    # VS Code, Chrome, Tailscale and MEGA repos are added in .chezmoiscripts/run_onchange_before_10-fedora-repos
     copr:
       - jdxcode/mise
     dnf:
@@ -27,6 +27,7 @@ packages:
     # Only on x86_64: no arm64 RPMs from these vendors (matters for Asahi)
     dnf_x86_64:
       - google-chrome-stable
+      - megasync           # MEGA desktop sync client
     # Only on KDE
     dnf_kde:
       - ksshaskpass        # SSH passphrase prompt, saved in KWallet
@@ -45,6 +46,7 @@ packages:
     flatpak:
       - com.getpostman.Postman
       - com.spotify.Client
+      - org.signal.Signal
 
   ubuntu:
     apt:
