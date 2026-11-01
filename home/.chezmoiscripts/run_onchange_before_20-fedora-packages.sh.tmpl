@@ -12,6 +12,11 @@ pkgs=(
 {{- range .packages.fedora.dnf_x86_64 }}
   {{ . | quote }}
 {{- end }}
+{{- if not (get . "minimal") }}
+{{- range .packages.fedora.dnf_x86_64_not_minimal }}
+  {{ . | quote }}
+{{- end }}
+{{- end }}
 {{- end }}
 {{- if .kde }}
 {{- range .packages.fedora.dnf_kde }}
