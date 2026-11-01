@@ -39,12 +39,24 @@ enabled=1
 gpgcheck=1
 gpgkey=https://dl.google.com/linux/linux_signing_key.pub
 REPO
+
+# MEGA's own repo (mega.nz/linux/repo); megasync is in packages.yaml dnf_x86_64
+sudo tee /etc/yum.repos.d/megasync.repo >/dev/null <<'REPO'
+[MEGAsync]
+name=MEGAsync
+baseurl=https://mega.nz/linux/repo/Fedora_$releasever/
+enabled=1
+gpgcheck=1
+gpgkey=https://mega.nz/linux/repo/Fedora_$releasever/repodata/repomd.xml.key
+REPO
 {{- end }}
 
 {{- if .asus }}
 
-# Terra hosts the asus-linux packages; terra-release brings its GPG key
-sudo dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
+# Terra hosts the asus-linux packages; terra-release brings its GPG key and terra.repo.
+# Skip once installed: the temporary repo id would clash with terra.repo's [terra] on reruns.
+rpm -q terra-release >/dev/null 2>&1 ||
+  sudo dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
 {{- end }}
 
 {{- if .kde }}
