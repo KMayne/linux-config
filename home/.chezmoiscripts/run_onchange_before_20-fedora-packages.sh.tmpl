@@ -12,8 +12,8 @@ pkgs=(
 {{- range .packages.fedora.dnf_x86_64 }}
   {{ . | quote }}
 {{- end }}
-{{- if not (get . "minimal") }}
-{{- range .packages.fedora.dnf_x86_64_not_minimal }}
+{{- if not (or (get . "minimal") (get . "work")) }}
+{{- range .packages.fedora.dnf_x86_64_personal }}
   {{ . | quote }}
 {{- end }}
 {{- end }}

@@ -39,9 +39,9 @@ enabled=1
 gpgcheck=1
 gpgkey=https://dl.google.com/linux/linux_signing_key.pub
 REPO
-{{- if not (get . "minimal") }}
+{{- if not (or (get . "minimal") (get . "work")) }}
 
-# MEGA's own repo (mega.nz/linux/repo); megasync is in packages.yaml dnf_x86_64_not_minimal
+# MEGA's own repo (mega.nz/linux/repo); megasync is in packages.yaml dnf_x86_64_personal
 sudo tee /etc/yum.repos.d/megasync.repo >/dev/null <<'REPO'
 [MEGAsync]
 name=MEGAsync
