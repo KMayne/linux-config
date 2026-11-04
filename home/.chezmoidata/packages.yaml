@@ -61,6 +61,6 @@ packages:
       - gh
       - curl
       - jq
-      - python3            # wakatime-cli installer
+      - python3
       - build-essential    # C linker for Rust crates
       - shellcheck
