@@ -8,8 +8,8 @@
 {{- end -}}
 {{- /* Asked once at init; work machines get a few different settings (e.g. theme) */ -}}
 {{- $work := promptBoolOnce . "work" "Is this a work machine" false -}}
-{{- /* Asked once at init; minimal machines (e.g. a Raspberry Pi) skip dev toolchains and wakatime */ -}}
-{{- $minimal := promptBoolOnce . "minimal" "Minimal setup, without dev toolchains or wakatime" false -}}
+{{- /* Asked once at init; minimal machines (e.g. a Raspberry Pi) skip dev toolchains */ -}}
+{{- $minimal := promptBoolOnce . "minimal" "Minimal setup, without dev toolchains" false -}}
 {{- /* Normalise distro so Fedora spins/remixes (e.g. Asahi) count as fedora */ -}}
 {{- $id := .chezmoi.osRelease.id -}}
 {{- $like := get .chezmoi.osRelease "idLike" | default "" -}}

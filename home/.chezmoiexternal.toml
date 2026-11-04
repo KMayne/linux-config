@@ -15,13 +15,6 @@
     stripComponents = 1
     refreshPeriod = "168h"
 
-[".config/zsh/omz-custom/plugins/wakatime"]
-    type = "archive"
-    url = "https://github.com/sobolevn/wakatime-zsh-plugin/archive/refs/heads/master.tar.gz"
-    exact = true
-    stripComponents = 1
-    refreshPeriod = "168h"
-
 [".config/zsh/omz-custom/plugins/zsh-prompt-benchmark"]
     type = "archive"
     url = "https://github.com/romkatv/zsh-prompt-benchmark/archive/refs/heads/master.tar.gz"
