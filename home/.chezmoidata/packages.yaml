@@ -27,8 +27,8 @@ packages:
     # Only on x86_64: no arm64 RPMs from these vendors (matters for Asahi)
     dnf_x86_64:
       - google-chrome-stable
-    # Only on x86_64 machines that aren't minimal
-    dnf_x86_64_not_minimal:
+    # Only on x86_64 machines that are neither minimal nor work
+    dnf_x86_64_personal:
       - megasync           # MEGA desktop sync client
     # Only on KDE
     dnf_kde:
