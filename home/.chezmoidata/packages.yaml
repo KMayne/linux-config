@@ -58,9 +58,11 @@ packages:
       - vim
       - tmux
       - git
-      - gh
       - curl
       - jq
       - python3
       - build-essential    # C linker for Rust crates
       - shellcheck
+    # Only on machines that aren't minimal: servers and Pis get no GitHub login
+    apt_not_minimal:
+      - gh

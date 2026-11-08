@@ -9,6 +9,11 @@ pkgs=(
 {{- range .packages.ubuntu.apt }}
   {{ . | quote }}
 {{- end }}
+{{- if not (get . "minimal") }}
+{{- range .packages.ubuntu.apt_not_minimal }}
+  {{ . | quote }}
+{{- end }}
+{{- end }}
 )
 sudo apt-get update
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "${pkgs[@]}"
