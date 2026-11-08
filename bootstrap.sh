@@ -13,8 +13,9 @@ SRC="$HOME/Repos/config"
 BRANCH="${BRANCH:-main}"
 export PATH="$HOME/.local/bin:$PATH"
 
-# Ask for the sudo password once, up front
-sudo -v
+# Ask for the sudo password once, up front. Skipped where sudo needs no password
+# (Raspberry Pi OS): there `sudo -v` still asks, because the sudo group's rule wants one.
+sudo -n true 2>/dev/null || sudo -v
 
 if ! command -v chezmoi >/dev/null; then
   echo "==> Installing chezmoi"
