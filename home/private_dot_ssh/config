@@ -1,8 +1,1 @@
 ServerAliveInterval 5
-
-
-# Full Tailscale name: a bare "voice-pi" sometimes goes to the ISP's DNS
-# search domain first and fails to resolve.
-Host voice-pi
-  HostName voice-pi.<tailnet>.ts.net
-  HostKeyAlias voice-pi
