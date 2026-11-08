@@ -1,45 +1,40 @@
-# Third-party code chezmoi downloads and keeps up to date (replaces the old git submodules).
-# `chezmoi apply` refreshes each one at most once per refreshPeriod; `chezmoi apply -R` forces it.
+# Third-party code chezmoi downloads (replaces the old git submodules), pinned to a commit
+# so a change upstream never reaches a shell here unreviewed. To update one, replace its
+# commit with a newer one from the project's history, then `chezmoi apply`.
 
 # Not `exact`, so Oh My Zsh's own cache/ and log/ dirs survive refreshes
 [".oh-my-zsh"]
     type = "archive"
-    url = "https://github.com/ohmyzsh/ohmyzsh/archive/refs/heads/master.tar.gz"
+    url = "https://github.com/ohmyzsh/ohmyzsh/archive/cca3bdfbef8c52ef8939ce7911ff68852b949daa.tar.gz"
     stripComponents = 1
-    refreshPeriod = "168h"
 
 [".config/zsh/omz-custom/plugins/zsh-syntax-highlighting"]
     type = "archive"
-    url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/refs/heads/master.tar.gz"
+    url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/e6683f20e5c38d3e5447f45845d04ddda75d0f23.tar.gz"
     exact = true
     stripComponents = 1
-    refreshPeriod = "168h"
 
 [".config/zsh/omz-custom/plugins/zsh-prompt-benchmark"]
     type = "archive"
-    url = "https://github.com/romkatv/zsh-prompt-benchmark/archive/refs/heads/master.tar.gz"
+    url = "https://github.com/romkatv/zsh-prompt-benchmark/archive/5f80595b3bc9ab4e2b11c1b8bcaa3a52c874d118.tar.gz"
     exact = true
     stripComponents = 1
-    refreshPeriod = "168h"
 
 # Vim plugins go straight into Vundle's bundle dir, so no :PluginInstall step is needed.
 [".vim/bundle/Vundle.vim"]
     type = "archive"
-    url = "https://github.com/VundleVim/Vundle.vim/archive/refs/heads/master.tar.gz"
+    url = "https://github.com/VundleVim/Vundle.vim/archive/5548a1a937d4e72606520c7484cd384e6c76b565.tar.gz"
     exact = true
     stripComponents = 1
-    refreshPeriod = "168h"
 
 [".vim/bundle/vim-colors-solarized"]
     type = "archive"
-    url = "https://github.com/altercation/vim-colors-solarized/archive/refs/heads/master.tar.gz"
+    url = "https://github.com/altercation/vim-colors-solarized/archive/528a59f26d12278698bb946f8fb82a63711eec21.tar.gz"
     exact = true
     stripComponents = 1
-    refreshPeriod = "168h"
 
 [".vim/bundle/vim-surround"]
     type = "archive"
-    url = "https://github.com/tpope/vim-surround/archive/refs/heads/master.tar.gz"
+    url = "https://github.com/tpope/vim-surround/archive/3d188ed2113431cf8dac77be61b842acb64433d9.tar.gz"
     exact = true
     stripComponents = 1
-    refreshPeriod = "168h"
