@@ -1,0 +1,13 @@
+# SSH keys allowed to log in as kian. Installed only on minimal machines (servers
+# and Pis, which run sshd); see .chezmoiignore. This repo is public: keep comments
+# to kian@<device>-<os> and nothing more revealing.
+#
+# Add a key: append its public key line here. Revoke one: delete its line.
+# Either way, commit and push, then run `chezmoi update` on every minimal machine;
+# a host keeps its old list until then.
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEAr6q+XSOY2qI1Ngg2YVlneS8om16nI0Z1BuCLRN5um kian@zephyrus-g14-fedora
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB5TnLyLI/hcg95wrdZCESWjV1B4XOja7471A/UxNnM4 kian@zephyrus-g14-windows
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBCs1ozC5mmQ/WF9AOZM21NtSvwZ3Nx2WrcvdImthtJ/ kian@desktop-fedora
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4SMaYn584AVlHFEHEJaRAIdQoh4sYBZ+/oTdsUSD2K kian@desktop-windows
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAbDuSje/iWkjlNE/3PZh0TIX0mqknr536uj+OZvNhsT kian@f16
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAC0ZCVgsCdKu+9yd57Ywpkh9GO6x6BgI0Vh6JXJKjvSFmeHbrJEkpewEQgy6eW46DNfFfBls04UWji3+WH4rcQV8Je/JrsHS8Anmz38HeXAgJD9uz3OHLCIXPGoUYa9yVhfTn/6xAFtb0CocyxNEHtUWWism2cIWArdgxTNEh9HeLbHeppm7W74OLxiJc3uckGotVOwdRlZyhyWZpD6RBFZwOct4Bs4qwKk1l2mJivR7f6sTfp+3U40a/CE3MOJHVW/moffKwc+IAmgZiYlSG+B2stsw6uFEItGWA6EZcHWxJo/x66NxvtSaYJ9BUM+qyuTunyxpSZ899MQIPYY49 kian@pixel-8-connectbot

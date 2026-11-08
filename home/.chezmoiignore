@@ -11,3 +11,7 @@
 {{ if not (and .kde (eq .distro "fedora")) }}
 .config/systemd/user/tailscale-systray.service
 {{ end }}
+{{ if not (get . "minimal") }}
+# Only minimal machines (servers, Pis) run sshd, so only they get authorized_keys
+.ssh/authorized_keys
+{{ end }}
