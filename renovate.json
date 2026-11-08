@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "schedule": ["* 0-5 1 * *"],
+  "customManagers": [
+    {
+      "description": "Oh My Zsh and the zsh/vim plugins, pinned to a commit of each project's master in .chezmoiexternal.toml",
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)\\.chezmoiexternal\\.toml$/"],
+      "matchStrings": [
+        "url = \"https://github\\.com/(?<depName>[^/]+/[^/]+)/archive/(?<currentDigest>[0-9a-f]{40})\\.tar\\.gz\""
+      ],
+      "currentValueTemplate": "master",
+      "packageNameTemplate": "https://github.com/{{{depName}}}",
+      "datasourceTemplate": "git-refs"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["custom.regex"],
+      "groupName": "zsh and vim plugins"
+    }
+  ]
+}
